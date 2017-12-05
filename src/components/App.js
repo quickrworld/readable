@@ -5,7 +5,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        Initial Commit
+        Initial Commit - Now updated!
       </div>
     );
   }

@@ -1,9 +1,67 @@
+export const INVALIDATE_CATEGORIES = 'INVALIDATE_CATEGORIES'
+export const FETCH_CATEGORIES_REQUEST = 'FETCH_CATEGORIES_REQUEST'
+export const FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS'
+export const FETCH_CATEGORIES_FAILURE = 'FETCH_CATEGORIES_FAILURE'
+
 export const SELECT_CATEGORY = 'SELECT_CATEGORY'
 export const INVALIDATE_CATEGORY = 'INVALIDATE_CATEGORY'
 export const FETCH_READABLES_REQUEST = 'FETCH_READABLES_REQUEST'
 export const FETCH_READABLES_SUCCESS = 'FETCH_READABLES_SUCCESS'
 export const FETCH_READABLES_FAILURE = 'FETCH_READABLES_FAILURE'
 
+// Categories
+export function fetchCategoriesRequest() {
+  return {
+    type: FETCH_CATEGORIES_REQUEST
+  }
+}
+
+export function fetchCategoriesSuccess(response) {
+  console.log("response",response)
+  const categories = response.categories.reduce((categories, category) => {
+    console.log("category", category)
+    categories[category.name] = category
+    return categories
+  }, {})
+  return {
+    type: FETCH_CATEGORIES_SUCCESS,
+    categories,
+    receivedAt: Date.now()
+  }
+}
+
+export function fetchCategoriesFailure(response) {
+  const status = response // TODO: extract status from response
+  return {
+    type: FETCH_CATEGORIES_FAILURE,
+    status
+  }
+}
+
+export function fetchCategories() {
+  return function (dispatch) {
+    dispatch(fetchCategoriesRequest())
+    const url = 'http://localhost:3001/categories'
+    return fetch(
+      url, {
+        headers: {
+          authorization: 'quickrworld'
+        }
+      }
+    )
+    .then(
+      response => response.json(),
+      error => console.log('An error occurred.', error)
+    )
+    .then(
+      json => json
+              ? dispatch(fetchCategoriesSuccess(json))
+              : dispatch(fetchCategoriesFailure(json))
+    )
+  }
+}
+
+// Readables
 export function selectCategory(category) {
   return {
     type: SELECT_CATEGORY,
@@ -54,20 +112,20 @@ export function fetchReadables(category) {
                 ? 'http://localhost:3001/posts'
                 : `http://localhost:3001/${category}/posts`
     return fetch(
-        url, {
-          headers: {
-            authorization: 'readables'
-          }
+      url, {
+        headers: {
+          authorization: 'quickrworld'
         }
-      )
-      .then(
-        response => response.json(),
-        error => console.log('An error occurred.', error)
-      )
-      .then(
-        json => json
-                  ? dispatch(fetchReadablesSuccess(category, json))
-                  : dispatch(fetchReadablesFailure(category, json))
-      )
+      }
+    )
+    .then(
+      response => response.json(),
+      error => console.log('An error occurred.', error)
+    )
+    .then(
+      json => json
+              ? dispatch(fetchReadablesSuccess(category, json))
+              : dispatch(fetchReadablesFailure(category, json))
+    )
   }
 }

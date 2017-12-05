@@ -1,6 +1,9 @@
 import { combineReducers } from 'redux'
-
 import {
+  INVALIDATE_CATEGORIES,
+  FETCH_CATEGORIES_REQUEST,
+  FETCH_CATEGORIES_SUCCESS,
+  FETCH_CATEGORIES_FAILURE,
   SELECT_CATEGORY,
   INVALIDATE_CATEGORY,
   FETCH_READABLES_REQUEST,
@@ -8,6 +11,55 @@ import {
   FETCH_READABLES_FAILURE
 } from "../actions";
 
+// categories
+function categories(
+  state = {
+    isFetching: false,
+    didInvalidate: false,
+    items: {}
+  }, action) {
+
+  switch(action.type) {
+    case INVALIDATE_CATEGORIES:
+      return Object.assign({}, state, {
+        didInvalidate: true
+      })
+    case FETCH_CATEGORIES_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true,
+        didInvalidate: false
+      })
+    case FETCH_CATEGORIES_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        didInvalidate: false,
+        items: action.categories,
+        lastUpdated: action.receivedAt
+      })
+    case FETCH_CATEGORIES_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        didInvalidate: false
+      })
+    default:
+      return state
+  }
+}
+
+function allCategories(state = {}, action) {
+  switch (action.type) {
+    case INVALIDATE_CATEGORIES:
+    case FETCH_CATEGORIES_SUCCESS:
+    case FETCH_CATEGORIES_REQUEST:
+      return Object.assign({}, state,
+        categories(state[action.category], action)
+      )
+    default:
+      return state
+  }
+}
+
+// readables
 function selectedCategory(state = 'all', action) {
   switch (action.type) {
     case SELECT_CATEGORY:
@@ -17,8 +69,7 @@ function selectedCategory(state = 'all', action) {
   }
 }
 
-function readables(
-  state = {
+function readables(state = {
     isFetching: false,
     didInvalidate: false,
     items: {}
@@ -42,7 +93,10 @@ function readables(
         lastUpdated: action.receivedAt
       })
     case FETCH_READABLES_FAILURE:
-      return state
+      return Object.assign({}, state, {
+        isFetching: false,
+        didInvalidate: false
+      })
     default:
       return state
   }
@@ -61,7 +115,9 @@ function readablesByCategory(state = {}, action) {
   }
 }
 
+// root reducer
 const reducer = combineReducers({
+  allCategories,
   readablesByCategory,
   selectedCategory
 })
