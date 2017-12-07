@@ -9,6 +9,12 @@ export const FETCH_READABLES_REQUEST = 'FETCH_READABLES_REQUEST'
 export const FETCH_READABLES_SUCCESS = 'FETCH_READABLES_SUCCESS'
 export const FETCH_READABLES_FAILURE = 'FETCH_READABLES_FAILURE'
 
+export const SELECT_READABLE = 'SELECT_READABLE'
+export const INVALIDATE_READABLE = 'INVALIDATE_READABLE'
+export const FETCH_COMMENTS_REQUEST = 'FETCH_COMMENTS_REQUEST'
+export const FETCH_COMMENTS_SUCCESS = 'FETCH_COMMENTS_SUCCESS'
+export const FETCH_COMMENTS_FAILURE = 'FETCH_COMMENTS_FAILURE'
+
 // Categories
 export function fetchCategoriesRequest() {
   return {
@@ -17,9 +23,7 @@ export function fetchCategoriesRequest() {
 }
 
 export function fetchCategoriesSuccess(response) {
-  console.log("response",response)
   const categories = response.categories.reduce((categories, category) => {
-    console.log("category", category)
     categories[category.name] = category
     return categories
   }, {})
@@ -126,6 +130,74 @@ export function fetchReadables(category) {
       json => json
               ? dispatch(fetchReadablesSuccess(category, json))
               : dispatch(fetchReadablesFailure(category, json))
+    )
+  }
+}
+
+// comments
+
+export function selectReadable(readable) {
+  return {
+    type: SELECT_READABLE,
+    readable
+  }
+}
+
+export function invalidateReadable(readable) {
+  return {
+    type: INVALIDATE_READABLE,
+    readable
+  }
+}
+
+export function fetchCommentsRequest(readable) {
+  return {
+    type: FETCH_COMMENTS_REQUEST,
+    readable
+  }
+}
+
+export function fetchCommentsSuccess(readable, response) {
+  const comments = response.reduce((comments, comment) => {
+    comments[comment.id] = comment
+    return comments
+  }, {})
+  return {
+    type: FETCH_COMMENTS_SUCCESS,
+    readable,
+    comments,
+    receivedAt: Date.now()
+  }
+}
+
+export function fetchCommentsFailure(readable, response) {
+  const status = response // TODO: extract status from response
+  return {
+    type: FETCH_COMMENTS_FAILURE,
+    readable,
+    status
+  }
+}
+
+export function fetchComments(readable) {
+  return function (dispatch) {
+    dispatch(fetchCommentsRequest(readable))
+    const url = `http://localhost:3001/posts/${readable}/comments`
+    return fetch(
+      url, {
+        headers: {
+          authorization: 'quickrworld'
+        }
+      }
+    )
+    .then(
+      response => response.json(),
+      error => console.log('An error occurred.', error)
+    )
+    .then(
+      json => json
+        ? dispatch(fetchCommentsSuccess(readable, json))
+        : dispatch(fetchCommentsFailure(readable, json))
     )
   }
 }

@@ -1,14 +1,19 @@
-import React, { Component } from 'react';
-import '../App.css';
+import React, { Component } from 'react'
+import CategoriesListView from './CategoriesListView'
+import ReadablesListView from './ReadablesListView'
+import CommentsListView from './CommentsListView'
+import '../App.css'
 
 class App extends Component {
   render() {
     return (
       <div>
-        Initial Commit - Now updated!
+        <CategoriesListView/>
+        <ReadablesListView/>
+        <CommentsListView/>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App

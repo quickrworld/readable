@@ -1,17 +1,21 @@
 import React from 'react';
-import { render } from 'react-dom'
+import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
-import { createLogger } from 'redux-logger'
-import { fetchCategories, selectCategory, fetchReadables } from "./actions";
+import {
+  fetchCategories,
+  selectCategory,
+  fetchReadables,
+  selectReadable,
+  fetchComments } from "./actions";
 import reducer from './reducers'
 import App from './components/App';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
-const logger = createLogger()
-const middleware = [ thunk, logger ]
+const middleware = [ thunk ]
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -29,15 +33,23 @@ store.dispatch(fetchCategories())
 store.dispatch(selectCategory('all'))
 store.dispatch(fetchReadables('all'))
 
-store.dispatch(selectCategory('react'))
-store.dispatch(fetchReadables('react'))
+// store.dispatch(selectCategory('react'))
+// store.dispatch(fetchReadables('react'))
+//
+// store.dispatch(selectCategory('redux'))
+// store.dispatch(fetchReadables('redux'))
+//
+store.dispatch(selectReadable('8xf0y6ziyjabvozdd253nd'))
+store.dispatch(fetchComments('8xf0y6ziyjabvozdd253nd'))
+//
+// store.dispatch(selectReadable('6ni6ok3ym7mf1p33lnez'))
+// store.dispatch(fetchComments('6ni6ok3ym7mf1p33lnez'))
 
-store.dispatch(selectCategory('redux'))
-store.dispatch(fetchReadables('redux'))
-
-render(
+ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <Route path="/" component={App} />
+    </Router>
   </Provider>, document.getElementById('root')
 )
 
