@@ -20,7 +20,6 @@ function mapStateToProps(state) {
   const comments = selectedReadable
     ? {
         isFetching: commentsByReadable[selectedReadable].isFetching,
-        didInvalidate: commentsByReadable[selectedReadable].didInvalidate,
         lastUpdated: commentsByReadable[selectedReadable].lastUpdated,
         comments: Object.keys(commentsByReadable[selectedReadable].items).reduce((comments, comment) => {
           comments.push(commentsByReadable[selectedReadable].items[comment])

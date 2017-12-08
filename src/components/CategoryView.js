@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {fetchReadables, selectCategory} from '../actions'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 
 class CategoryView extends Component {
@@ -13,12 +13,12 @@ class CategoryView extends Component {
   render() {
     return (
       <div>
-      <Link
-        // onClick={() => this.handleChange(this.props.category)}
+      <NavLink
+        activeStyle={{textDecoration: 'none'}}
         to={{
           pathname: `/${this.props.category.path}/posts`,
           state: { category: this.props.category }
-        }}>{this.props.category.name}</Link>
+        }}>{this.props.category.name}</NavLink>
       </div>
     )
   }

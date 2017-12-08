@@ -1,50 +1,41 @@
 import { combineReducers } from 'redux'
 import {
-  INVALIDATE_CATEGORIES,
   FETCH_CATEGORIES_REQUEST,
   FETCH_CATEGORIES_SUCCESS,
   FETCH_CATEGORIES_FAILURE,
   SELECT_CATEGORY,
-  INVALIDATE_CATEGORY,
   FETCH_READABLES_REQUEST,
   FETCH_READABLES_SUCCESS,
   FETCH_READABLES_FAILURE,
   SELECT_READABLE,
-  INVALIDATE_READABLE,
   FETCH_COMMENTS_REQUEST,
   FETCH_COMMENTS_SUCCESS,
-  FETCH_COMMENTS_FAILURE
+  FETCH_COMMENTS_FAILURE,
+  FETCH_READABLE_REQUEST,
+  FETCH_READABLE_SUCCESS,
+  FETCH_READABLE_FAILURE
 } from "../actions";
 
 // categories
 function categories(
   state = {
     isFetching: false,
-    didInvalidate: false,
     items: {}
   }, action) {
-
   switch(action.type) {
-    case INVALIDATE_CATEGORIES:
-      return Object.assign({}, state, {
-        didInvalidate: true
-      })
     case FETCH_CATEGORIES_REQUEST:
       return Object.assign({}, state, {
-        isFetching: true,
-        didInvalidate: false
+        isFetching: true
       })
     case FETCH_CATEGORIES_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
-        didInvalidate: false,
         items: action.categories,
         lastUpdated: action.receivedAt
       })
     case FETCH_CATEGORIES_FAILURE:
       return Object.assign({}, state, {
-        isFetching: false,
-        didInvalidate: false
+        isFetching: false
       })
     default:
       return state
@@ -53,12 +44,10 @@ function categories(
 
 function allCategories(state = {
   isFetching: false,
-  didInvalidate: false,
   lastUpdated: 0,
   items: {},
 }, action) {
   switch (action.type) {
-    case INVALIDATE_CATEGORIES:
     case FETCH_CATEGORIES_SUCCESS:
     case FETCH_CATEGORIES_REQUEST:
       return Object.assign({}, state,
@@ -81,33 +70,66 @@ function selectedCategory(state = '', action) {
 
 function readables(state = {
     isFetching: false,
-    didInvalidate: false,
     items: {}
   }, action) {
-  console.log('readables:action', action)
   switch(action.type) {
-    case INVALIDATE_CATEGORY:
-      return Object.assign({}, state, {
-        didInvalidate: true
-      })
     case FETCH_READABLES_REQUEST:
       return Object.assign({}, state, {
-        isFetching: true,
-        didInvalidate: false
+        isFetching: true
       })
     case FETCH_READABLES_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
-        didInvalidate: false,
         items: action.readables,
         lastUpdated: action.receivedAt
       })
     case FETCH_READABLES_FAILURE:
-      console.log('FETCH_READABLES_FAILURE', state)
+      return Object.assign({}, state, {
+        isFetching: false
+      })
+    default:
+      return state
+  }
+}
+
+function readable(state = {
+  isFetching: false,
+  readable: {}
+}, action) {
+  switch(action.type) {
+    case FETCH_READABLE_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true
+      })
+    case FETCH_READABLE_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
-        didInvalidate: false
+        items: action.readables,
+        lastUpdated: action.receivedAt
       })
+    case FETCH_READABLE_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false
+      })
+    default:
+      return state
+  }
+}
+
+function readableById(state = {
+  isFetching: false,
+  lastUpdated: 0,
+  // readable: {}
+}, action) {
+  switch(action.type) {
+    case FETCH_READABLE_SUCCESS:
+    case FETCH_READABLE_REQUEST:
+      if(action.id) {
+        return Object.assign({}, state, {
+          'id': readable(state[action.id], action)
+        })
+      }
+      return state
     default:
       return state
   }
@@ -115,12 +137,10 @@ function readables(state = {
 
 function readablesByCategory(state = {
   isFetching: false,
-  didInvalidate: false,
   lastUpdated: 0,
   // items: {},
 }, action) {
   switch (action.type) {
-    case INVALIDATE_CATEGORY:
     case FETCH_READABLES_SUCCESS:
     case FETCH_READABLES_REQUEST:
       if (action.category) {
@@ -146,31 +166,22 @@ function selectedReadable(state = {}, action) {
 
 function comments(state = {
   isFetching: false,
-  didInvalidate: false,
   // items: {}
 }, action) {
-
   switch(action.type) {
-    case INVALIDATE_READABLE:
-      return Object.assign({}, state, {
-        didInvalidate: true
-      })
     case FETCH_COMMENTS_REQUEST:
       return Object.assign({}, state, {
-        isFetching: true,
-        didInvalidate: false
+        isFetching: true
       })
     case FETCH_COMMENTS_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
-        didInvalidate: false,
         items: action.comments,
         lastUpdated: action.receivedAt
       })
     case FETCH_COMMENTS_FAILURE:
       return Object.assign({}, state, {
-        isFetching: false,
-        didInvalidate: false
+        isFetching: false
       })
     default:
       return state
@@ -179,7 +190,6 @@ function comments(state = {
 
 function commentsByReadable(state = {}, action) {
   switch (action.type) {
-    case INVALIDATE_READABLE:
     case FETCH_COMMENTS_SUCCESS:
     case FETCH_COMMENTS_REQUEST:
       return Object.assign({}, state, {
@@ -196,6 +206,7 @@ const reducer = combineReducers({
   readablesByCategory,
   selectedCategory,
   selectedReadable,
+  readableById,
   commentsByReadable
 })
 

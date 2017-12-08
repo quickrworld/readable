@@ -7,6 +7,7 @@ import ReadablesListView from './ReadablesListView'
 import {fetchCategories, fetchReadables, selectCategory} from '../actions'
 
 import '../App.css'
+import ReadableView from "./ReadableView";
 
 class App extends Component {
   componentDidMount() {
@@ -31,6 +32,12 @@ class App extends Component {
             <div>
               <div>Category: {match.params.category}</div>
               <ReadablesListView category={match.params.category}/>
+            </div>
+          )}/>
+          <Route exact={true} path={'/posts/:id'} render={({match}) => (
+            <div>
+              <div>Readable: Id: {match.params.id}</div>
+              <ReadableView id={match.params.id}/>
             </div>
           )}/>
         </div>

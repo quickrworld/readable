@@ -19,7 +19,6 @@ function mapStateToProps(state) {
   const { allCategories, selectedCategory } = state
   const categories = {
     isFetching: allCategories.isFetching,
-    didInvalidate: allCategories.didInvalidate,
     lastUpdated: allCategories.lastUpdated,
     categories: Object.keys(allCategories.items).reduce((categories, category) => {
       categories.push(allCategories.items[category])
