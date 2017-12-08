@@ -17,15 +17,19 @@ class CommentsListView extends Component {
 function mapStateToProps(state) {
   const { commentsByReadable, selectedReadable } = state
 
-  const comments = {
-    isFetching: commentsByReadable[selectedReadable].isFetching,
-    didInvalidate: commentsByReadable[selectedReadable].didInvalidate,
-    lastUpdated: commentsByReadable[selectedReadable].lastUpdated,
-    comments: Object.keys(commentsByReadable[selectedReadable].items).reduce((comments, comment) => {
-      comments.push(commentsByReadable[selectedReadable].items[comment])
-      return comments
-    }, [])
-  }
+  const comments = selectedReadable
+    ? {
+        isFetching: commentsByReadable[selectedReadable].isFetching,
+        didInvalidate: commentsByReadable[selectedReadable].didInvalidate,
+        lastUpdated: commentsByReadable[selectedReadable].lastUpdated,
+        comments: Object.keys(commentsByReadable[selectedReadable].items).reduce((comments, comment) => {
+          comments.push(commentsByReadable[selectedReadable].items[comment])
+          return comments
+        }, [])
+      }
+    : {
+        comments: []
+      }
 
   return { comments, selectedReadable }
 }

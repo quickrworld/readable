@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import CategoryView from './CategoryView'
+import { withRouter } from 'react-router-dom'
 
 class CategoryListView extends Component {
   render() {
@@ -16,7 +17,6 @@ class CategoryListView extends Component {
 
 function mapStateToProps(state) {
   const { allCategories, selectedCategory } = state
-
   const categories = {
     isFetching: allCategories.isFetching,
     didInvalidate: allCategories.didInvalidate,
@@ -30,4 +30,4 @@ function mapStateToProps(state) {
   return { categories, selectedCategory }
 }
 
-export default connect(mapStateToProps)(CategoryListView);
+export default withRouter(connect(mapStateToProps)(CategoryListView))

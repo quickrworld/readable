@@ -55,7 +55,7 @@ export function fetchCategories() {
     )
     .then(
       response => response.json(),
-      error => console.log('An error occurred.', error)
+      error => console.log('An error occurred.', error) && { 'error': error }
     )
     .then(
       json => json
@@ -101,7 +101,8 @@ export function fetchReadablesSuccess(category, response) {
 }
 
 export function fetchReadablesFailure(category, response) {
-  const status = response // TODO: extract status from response
+  console.log('fetchReadablesFailure', category, response)
+  const status = response
   return {
     type: FETCH_READABLES_FAILURE,
     category,
@@ -124,12 +125,12 @@ export function fetchReadables(category) {
     )
     .then(
       response => response.json(),
-      error => console.log('An error occurred.', error)
+      error => console.log('An error occurred.', error) || ({ 'error': error })
     )
     .then(
-      json => json
-              ? dispatch(fetchReadablesSuccess(category, json))
-              : dispatch(fetchReadablesFailure(category, json))
+      json => json['error']
+              ? console.log('json error:', json) || dispatch(fetchReadablesFailure(category, json))
+              : console.log('json success:', json) || dispatch(fetchReadablesSuccess(category, json))
     )
   }
 }
@@ -192,7 +193,7 @@ export function fetchComments(readable) {
     )
     .then(
       response => response.json(),
-      error => console.log('An error occurred.', error)
+      error => console.log('An error occurred.', error) && { 'error': error }
     )
     .then(
       json => json

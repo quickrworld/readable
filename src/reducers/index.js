@@ -51,7 +51,12 @@ function categories(
   }
 }
 
-function allCategories(state = {}, action) {
+function allCategories(state = {
+  isFetching: false,
+  didInvalidate: false,
+  lastUpdated: 0,
+  items: {},
+}, action) {
   switch (action.type) {
     case INVALIDATE_CATEGORIES:
     case FETCH_CATEGORIES_SUCCESS:
@@ -65,10 +70,10 @@ function allCategories(state = {}, action) {
 }
 
 // readables
-function selectedCategory(state = 'all', action) {
+function selectedCategory(state = '', action) {
   switch (action.type) {
     case SELECT_CATEGORY:
-      return action.category
+      return action.category ? action.category : state
     default:
       return state
   }
@@ -79,7 +84,7 @@ function readables(state = {
     didInvalidate: false,
     items: {}
   }, action) {
-
+  console.log('readables:action', action)
   switch(action.type) {
     case INVALIDATE_CATEGORY:
       return Object.assign({}, state, {
@@ -98,6 +103,7 @@ function readables(state = {
         lastUpdated: action.receivedAt
       })
     case FETCH_READABLES_FAILURE:
+      console.log('FETCH_READABLES_FAILURE', state)
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false
@@ -107,21 +113,29 @@ function readables(state = {
   }
 }
 
-function readablesByCategory(state = {}, action) {
+function readablesByCategory(state = {
+  isFetching: false,
+  didInvalidate: false,
+  lastUpdated: 0,
+  // items: {},
+}, action) {
   switch (action.type) {
     case INVALIDATE_CATEGORY:
     case FETCH_READABLES_SUCCESS:
     case FETCH_READABLES_REQUEST:
-      return Object.assign({}, state, {
-        [action.category]: readables(state[action.category], action)
-      })
+      if (action.category) {
+        return Object.assign({}, state, {
+          [action.category]: readables(state[action.category], action)
+        })
+      }
+      return state
     default:
       return state
   }
 }
 
 // comments
-function selectedReadable(state = '', action) {
+function selectedReadable(state = {}, action) {
   switch (action.type) {
     case SELECT_READABLE:
       return action.readable
@@ -133,7 +147,7 @@ function selectedReadable(state = '', action) {
 function comments(state = {
   isFetching: false,
   didInvalidate: false,
-  items: {}
+  // items: {}
 }, action) {
 
   switch(action.type) {
