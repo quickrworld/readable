@@ -104,7 +104,7 @@ function readable(state = {
     case FETCH_READABLE_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
-        items: action.readables,
+        readable: action.readable,
         lastUpdated: action.receivedAt
       })
     case FETCH_READABLE_FAILURE:
@@ -125,9 +125,10 @@ function readableById(state = {
     case FETCH_READABLE_SUCCESS:
     case FETCH_READABLE_REQUEST:
       if(action.id) {
-        return Object.assign({}, state, {
-          'id': readable(state[action.id], action)
+        const value =  Object.assign({}, state, {
+          [action.id]: readable(state[action.id], action)
         })
+        return value
       }
       return state
     default:
@@ -207,6 +208,7 @@ const reducer = combineReducers({
   selectedCategory,
   selectedReadable,
   readableById,
+  // readable,
   commentsByReadable
 })
 

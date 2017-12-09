@@ -28,7 +28,7 @@ class App extends Component {
               <ReadablesListView category={'all'}/>
             </div>
           )}/>
-          <Route exact={true} path={'/:category/posts'} render={({match}) => (
+          <Route exact path={'/:category/posts'} render={({match}) => (
             <div>
               <div>Category: {match.params.category}</div>
               <ReadablesListView category={match.params.category}/>

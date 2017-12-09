@@ -5,11 +5,6 @@ import { NavLink } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 
 class CategoryView extends Component {
-  handleChange(category) {
-    this.props.selectCategory(category.path)
-    this.props.fetchReadables(category.path)
-  }
-
   render() {
     return (
       <div>

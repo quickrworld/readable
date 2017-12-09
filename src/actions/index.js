@@ -159,6 +159,7 @@ export function fetchReadable(id) {
   return function (dispatch) {
     dispatch(fetchReadableRequest(id))
     const url = id ? `http://localhost:3001/posts/${id}` : `http://localhost:3001/posts`
+    // const url = `http://localhost:3001/posts/${id}`
     return fetch(
       url, {
         headers: {

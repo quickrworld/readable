@@ -19,7 +19,10 @@ class ReadablesListView extends Component {
     return (
       <div>
         {this.props.readables.readables.map((readable) => (
-          <ReadableView key={readable.id} readable={readable}/>
+          <div key={readable.id} >
+            Id: {readable.id}
+            <ReadableView id={readable.id} readable={readable}/>
+          </div>
         ))}
       </div>
     )
