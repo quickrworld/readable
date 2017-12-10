@@ -59,7 +59,7 @@ function allCategories(state = {
 }
 
 // readables
-function selectedCategory(state = '', action) {
+function selectedCategory(state = 'all', action) {
   switch (action.type) {
     case SELECT_CATEGORY:
       return action.category ? action.category : state
@@ -159,7 +159,7 @@ function readablesByCategory(state = {
 function selectedReadable(state = {}, action) {
   switch (action.type) {
     case SELECT_READABLE:
-      return action.readable
+      return action.readable ? action.readable : state
     default:
       return state
   }
@@ -208,7 +208,7 @@ const reducer = combineReducers({
   selectedCategory,
   selectedReadable,
   readableById,
-  // readable,
+//  readable,
   commentsByReadable
 })
 

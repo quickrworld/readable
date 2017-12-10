@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import {fetchReadable} from "../actions"
+import {selectReadable, fetchReadable} from "../actions"
 import {withRouter} from "react-router-dom"
 import {connect} from "react-redux"
 
 class ReadableView extends Component {
   componentDidMount() {
     const id = this.props.id || ((this.props.readable) && this.props.readable.id)
+    this.props.selectReadable(id)
     this.props.fetchReadable(id)
   }
   render() {
@@ -22,13 +23,15 @@ class ReadableView extends Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+  const selectedReadable = ownProps.id
   const { readable, readableById  } = state
-  return { readable, readableById }
+  return { selectedReadable, readable, readableById }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    selectReadable: (id) => dispatch(selectReadable(id)),
     fetchReadable: (id) => dispatch(fetchReadable(id))
   }
 }

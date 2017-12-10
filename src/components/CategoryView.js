@@ -24,11 +24,11 @@ function mapStateToProps(state) {
   return { selectedCategory }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    selectCategory: (category) => dispatch(selectCategory(category)),
-    fetchReadables: (category) => dispatch(fetchReadables(category))
-  }
-}
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     selectCategory: (category) => dispatch(selectCategory(category)),
+//     fetchReadables: (category) => dispatch(fetchReadables(category))
+//   }
+// }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CategoryView))
+export default withRouter(connect(mapStateToProps, null)(CategoryView))
