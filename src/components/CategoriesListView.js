@@ -7,9 +7,13 @@ class CategoryListView extends Component {
   render() {
     return (
       <div>
-        {this.props.categories.categories.map((category) => (
-          <CategoryView key={category.path} category={category}/>
-        ))}
+        <div>Categories List View</div>
+        <div>
+          {this.props.categories.categories.map((category) => (
+            <CategoryView key={category.path} category={category}/>
+          ))}
+        </div>
+        <hr/>
       </div>
     )
   }
@@ -25,7 +29,6 @@ function mapStateToProps(state) {
       return categories
     }, [])
   }
-
   return { categories, selectedCategory }
 }
 

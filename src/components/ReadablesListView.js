@@ -8,19 +8,18 @@ class ReadablesListView extends Component {
     this.props.selectCategory(this.props.category)
     this.props.fetchReadables(this.props.category)
   }
-
   componentWillReceiveProps(nextProps) {
     if(this.props.selectedCategory !== nextProps.selectedCategory) {
+      this.props.selectCategory(nextProps.category)
       this.props.fetchReadables(nextProps.selectedCategory)
     }
   }
-
   render() {
     return (
       <div>
+        <div>Selected Category: {this.props.category}</div>
         {this.props.readables.readables.map((readable) => (
           <div key={readable.id} >
-            Id: {readable.id}
             <ReadableView id={readable.id} readable={readable}/>
           </div>
         ))}

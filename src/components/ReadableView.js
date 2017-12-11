@@ -1,23 +1,37 @@
 import React, { Component } from 'react'
 import {selectReadable, fetchReadable} from "../actions"
+import CommentsListView from "./CommentsListView"
 import {withRouter} from "react-router-dom"
 import {connect} from "react-redux"
 
 class ReadableView extends Component {
   componentDidMount() {
-    const id = this.props.id || ((this.props.readable) && this.props.readable.id)
-    this.props.selectReadable(id)
-    this.props.fetchReadable(id)
+    const id = this.props.id
+    if(id) {
+      this.props.selectReadable(id)
+      this.props.fetchReadable(id)
+    }
   }
   render() {
     return (
       <div>
-        <p>this.props.id: {this.props.id}</p>
-        <p>this.props.readable.readable.id: this.props.readable.readable.id}</p>
-        <p>this.props.readableById[]: {
+        <div>Readable View</div>
+        <div>Id: {
           this.props.readableById &&
           this.props.readableById[this.props.id] &&
-          this.props.readableById[this.props.id].readable.id}</p>
+          this.props.readableById[this.props.id].readable &&
+          this.props.readableById[this.props.id].readable.id}</div>
+        <div>Title: {
+          this.props.readableById &&
+          this.props.readableById[this.props.id] &&
+          this.props.readableById[this.props.id].readable &&
+          this.props.readableById[this.props.id].readable.title}</div>
+        <div>Category: {
+          this.props.readableById &&
+          this.props.readableById[this.props.id] &&
+          this.props.readableById[this.props.id].readable &&
+          this.props.readableById[this.props.id].readable.category}</div>
+        <CommentsListView selectedReadable={this.props.id}/>
       </div>
     )
   }

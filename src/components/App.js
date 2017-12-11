@@ -15,7 +15,6 @@ class App extends Component {
     this.props.selectCategory(this.props.selectedCategory)
     this.props.fetchReadables(this.props.selectedCategory)
   }
-
   render() {
     return (
       <Router>
@@ -24,18 +23,17 @@ class App extends Component {
         <div>
           <Route exact={true} path={'/'} render={() => (
             <div>
-              <div>Category: all</div>
               <ReadablesListView category={'all'}/>
             </div>
           )}/>
-          <Route exact path={'/:category/posts'} render={({match}) => (
+          <Route exact={true} path={'/:category/posts'} render={({match}) => (
             <div>
-              <div>Category: {match.params.category}</div>
               <ReadablesListView category={match.params.category}/>
             </div>
           )}/>
           <Route exact={true} path={'/posts/:id'} render={({match}) => (
             <div>
+              <div>ReadableView</div>
               <div>Readable: Id: {match.params.id}</div>
               <ReadableView id={match.params.id}/>
             </div>

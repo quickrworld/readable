@@ -93,8 +93,7 @@ function readables(state = {
 }
 
 function readable(state = {
-  isFetching: false,
-  readable: {}
+  isFetching: false
 }, action) {
   switch(action.type) {
     case FETCH_READABLE_REQUEST:
@@ -118,8 +117,7 @@ function readable(state = {
 
 function readableById(state = {
   isFetching: false,
-  lastUpdated: 0,
-  // readable: {}
+  lastUpdated: 0
 }, action) {
   switch(action.type) {
     case FETCH_READABLE_SUCCESS:
@@ -138,8 +136,7 @@ function readableById(state = {
 
 function readablesByCategory(state = {
   isFetching: false,
-  lastUpdated: 0,
-  // items: {},
+  lastUpdated: 0
 }, action) {
   switch (action.type) {
     case FETCH_READABLES_SUCCESS:
@@ -156,7 +153,7 @@ function readablesByCategory(state = {
 }
 
 // comments
-function selectedReadable(state = {}, action) {
+function selectedReadable(state = null, action) {
   switch (action.type) {
     case SELECT_READABLE:
       return action.readable ? action.readable : state
@@ -166,8 +163,7 @@ function selectedReadable(state = {}, action) {
 }
 
 function comments(state = {
-  isFetching: false,
-  // items: {}
+  isFetching: false
 }, action) {
   switch(action.type) {
     case FETCH_COMMENTS_REQUEST:
@@ -193,9 +189,10 @@ function commentsByReadable(state = {}, action) {
   switch (action.type) {
     case FETCH_COMMENTS_SUCCESS:
     case FETCH_COMMENTS_REQUEST:
-      return Object.assign({}, state, {
+      const value =  Object.assign({}, state, {
         [action.readable]: comments(state[action.readable], action)
       })
+      return value
     default:
       return state
   }
@@ -208,7 +205,6 @@ const reducer = combineReducers({
   selectedCategory,
   selectedReadable,
   readableById,
-//  readable,
   commentsByReadable
 })
 
