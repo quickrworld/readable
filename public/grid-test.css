@@ -24,7 +24,6 @@ body {
 .content {
   display: grid;
   grid-template-rows: 57px 1fr;
-  // border-bottom: 20px solid rgb(28,38,47);
 }
 
 #content-header {
