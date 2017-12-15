@@ -22,21 +22,13 @@ class App extends Component {
         <CategoriesListView />
         <div>
           <Route exact={true} path={'/'} render={() => (
-            <div>
-              <ReadablesListView category={'all'}/>
-            </div>
+            <ReadablesListView category={'all'}/>
           )}/>
           <Route exact={true} path={'/:category/posts'} render={({match}) => (
-            <div>
-              <ReadablesListView category={match.params.category}/>
-            </div>
+            <ReadablesListView category={match.params.category}/>
           )}/>
           <Route exact={true} path={'/posts/:id'} render={({match}) => (
-            <div>
-              <div>ReadableView</div>
-              <div>Readable: Id: {match.params.id}</div>
-              <ReadableView id={match.params.id}/>
-            </div>
+            <ReadableView id={match.params.id}/>
           )}/>
         </div>
       </div>

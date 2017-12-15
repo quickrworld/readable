@@ -220,7 +220,6 @@ export function fetchComments(readable) {
   return function (dispatch) {
     dispatch(fetchCommentsRequest(readable))
     const url = `http://localhost:3001/posts/${readable}/comments`
-    // console.log("readable, url", readable, url)
     return fetch(
       url, {
         headers: {

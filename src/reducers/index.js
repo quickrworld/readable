@@ -7,7 +7,7 @@ import {
   FETCH_READABLES_REQUEST,
   FETCH_READABLES_SUCCESS,
   FETCH_READABLES_FAILURE,
-  SELECT_READABLE,
+  // SELECT_READABLE,
   FETCH_COMMENTS_REQUEST,
   FETCH_COMMENTS_SUCCESS,
   FETCH_COMMENTS_FAILURE,
@@ -153,14 +153,14 @@ function readablesByCategory(state = {
 }
 
 // comments
-function selectedReadable(state = null, action) {
-  switch (action.type) {
-    case SELECT_READABLE:
-      return action.readable ? action.readable : state
-    default:
-      return state
-  }
-}
+// function selectedReadable(state = null, action) {
+//   switch (action.type) {
+//     case SELECT_READABLE:
+//       return action.readable ? action.readable : state
+//     default:
+//       return state
+//   }
+// }
 
 function comments(state = {
   isFetching: false
@@ -203,7 +203,7 @@ const reducer = combineReducers({
   allCategories,
   readablesByCategory,
   selectedCategory,
-  selectedReadable,
+  // selectedReadable,
   readableById,
   commentsByReadable
 })

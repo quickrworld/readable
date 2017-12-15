@@ -1,12 +1,6 @@
 import React, { Component } from 'react'
 
 class CommentView extends Component {
-  componentWillMount() {
-    console.log("CommentView will mounted", this.props)
-  }
-  componentWillReceiveProps(nextProps) {
-    console.log("CommentView will receive props", nextProps)
-  }
   render() {
     return (
       <div>

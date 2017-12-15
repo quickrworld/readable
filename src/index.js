@@ -20,33 +20,6 @@ const store = createStore(
   )
 )
 
-// Testing the primary actions
-
-// store.dispatch(fetchCategories())
-//
-// store.dispatch(selectCategory('all'))
-// store.dispatch(fetchReadables('all'))
-//
-// // store.dispatch(selectCategory('react'))
-// // store.dispatch(fetchReadables('react'))
-// //
-// // store.dispatch(selectCategory('redux'))
-// // store.dispatch(fetchReadables('redux'))
-// //
-// // store.dispatch(selectReadable('8xf0y6ziyjabvozdd253nd'))
-// store.dispatch(fetchComments('8xf0y6ziyjabvozdd253nd'))
-// //
-// // store.dispatch(selectReadable('6ni6ok3ym7mf1p33lnez'))
-// // store.dispatch(fetchComments('6ni6ok3ym7mf1p33lnez'))
-
-// ReactDOM.render(
-//   <Provider store={store}>
-//     <Router>
-//       <Route path="/" component={App} />
-//     </Router>
-//   </Provider>, document.getElementById('root')
-// )
-
 ReactDOM.render(
   <Provider store={store}>
     <Router>

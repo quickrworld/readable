@@ -5,15 +5,12 @@ import {fetchComments, selectReadable} from "../actions"
 
 class CommentsListView extends Component {
   componentDidMount() {
-    // console.log("CommentsListView:DidMount:selectedReadable", this.props.selectedReadable)
     if(this.props.selectedReadable) {
-      this.props.selectReadable(this.props.selectedReadable)
+      // this.props.selectReadable(this.props.selectedReadable)
       this.props.fetchComments(this.props.selectedReadable)
     }
   }
   componentWillReceiveProps(nextProps) {
-    // console.log("CommentsListView:WillReceiveProps:props:selectedReadable", this.props.selectedReadable)
-    // console.log("CommentsListView:WillReceiveProps:nextProps:selectedReadable", nextProps.selectedReadable)
     if(this.props.selectedReadable !== nextProps.selectedReadable) {
       this.props.fetchComments(nextProps.selectedReadable)
     }
@@ -32,8 +29,9 @@ class CommentsListView extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  const { commentsByReadable, selectedReadable } = state
+function mapStateToProps(state, ownProps) {
+  const { commentsByReadable } = state
+  const selectedReadable = ownProps.selectedReadable
   const comments = selectedReadable
     ? {
         isFetching: commentsByReadable[selectedReadable] ? commentsByReadable[selectedReadable].isFetching : false,

@@ -32,6 +32,7 @@ class ReadableView extends Component {
           this.props.readableById[this.props.id].readable &&
           this.props.readableById[this.props.id].readable.category}</div>
         <CommentsListView selectedReadable={this.props.id}/>
+        <hr/>
       </div>
     )
   }

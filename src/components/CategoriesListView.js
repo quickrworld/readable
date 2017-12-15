@@ -8,11 +8,11 @@ class CategoryListView extends Component {
     return (
       <div>
         <div>Categories List View</div>
-        <div>
           {this.props.categories.categories.map((category) => (
-            <CategoryView key={category.path} category={category}/>
+            <div key={category.path} >
+              <CategoryView category={category}/>
+            </div>
           ))}
-        </div>
         <hr/>
       </div>
     )
