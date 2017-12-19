@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import {selectReadable, fetchReadable} from '../actions'
-import {withRouter} from 'react-router-dom'
-import {connect} from 'react-redux'
-import FaEdit from 'react-icons/lib/fa/edit'
+import {selectReadable, fetchReadable} from "../actions"
+import {withRouter} from "react-router-dom"
+import {connect} from "react-redux"
+import CommentsListView from './CommentsListView'
 import UpvoteReadableView from './UpvoteReadableView'
 import DownvoteReadableView from './DownvoteReadableView'
+import FaEdit from 'react-icons/lib/fa/edit'
 
-class ReadableView extends Component {
+class ReadableViewWithComments extends Component {
   componentDidMount() {
     const id = this.props.id
     if(id) {
@@ -25,23 +26,29 @@ class ReadableView extends Component {
         }}>
           <div style={{gridColumnStart: '1', gridColumnEnd: '2', fontSize: '18px', color: 'rgb(79, 79, 79)'}}>
             {this.props.readableById &&
-              this.props.readableById[this.props.id] &&
-              this.props.readableById[this.props.id].readable &&
-              this.props.readableById[this.props.id].readable.title}
+            this.props.readableById[this.props.id] &&
+            this.props.readableById[this.props.id].readable &&
+            this.props.readableById[this.props.id].readable.title}
           </div>
-          <div style={{gridColumnStart: '2', gridColumnEnd: '3', textAlign: 'right', alignContent: 'center'}}>
-            <span style={{fontSize: '12pt', color: 'rgb(79, 79, 79)'}}><span role={'img'} aria-label=""><FaEdit/></span></span>
+          <div style={{
+            gridColumnStart: '2',
+            gridColumnEnd: '3',
+            textAlign: 'right',
+            alignContent: 'center'}}>
+            <span style={{
+              fontSize: '12pt',
+              color: 'rgb(79, 79, 79)'}}><span role={'img'} aria-label=""><FaEdit/></span> ︎</span>
           </div>
           <div style={{gridColumnStart: '1', gridColumnEnd: '2', color: 'rgb(79, 79, 79)'}}>
             {this.props.readableById &&
-              this.props.readableById[this.props.id] &&
-              this.props.readableById[this.props.id].readable &&
-              this.props.readableById[this.props.id].readable.author} |
-              {this.props.readableById &&
-                this.props.readableById[this.props.id] &&
-                this.props.readableById[this.props.id].readable &&
-                this.props.readableById[this.props.id].readable.timestamp && new Date(
-                this.props.readableById[this.props.id].readable.timestamp).toDateString()} | <span style={{whiteSpace: 'nowrap'}}>
+            this.props.readableById[this.props.id] &&
+            this.props.readableById[this.props.id].readable &&
+            this.props.readableById[this.props.id].readable.author} |
+            {this.props.readableById &&
+            this.props.readableById[this.props.id] &&
+            this.props.readableById[this.props.id].readable &&
+            this.props.readableById[this.props.id].readable.timestamp && new Date(
+              this.props.readableById[this.props.id].readable.timestamp).toDateString()} | <span style={{whiteSpace: 'nowrap'}}>
               {this.props.readableById &&
               this.props.readableById[this.props.id] &&
               this.props.readableById[this.props.id].readable &&
@@ -52,9 +59,10 @@ class ReadableView extends Component {
               this.props.readableById[this.props.id].readable &&
               this.props.readableById[this.props.id].readable.voteScore} votes </span>
               <span role={'img'} aria-label="Up vote">
-                <UpvoteReadableView readable={this.props.readableById[this.props.id]}/> </span>
-              <span role={'img'} aria-label="Down vote">
-                <DownvoteReadableView readable={this.props.readableById[this.props.id]}/> </span>
+                <UpvoteReadableView readable={this.props.readableById[this.props.id]}/>
+              </span> <span role={'img'} aria-label="Down vote">
+                <DownvoteReadableView readable={this.props.readableById[this.props.id]}/>
+              </span>
             </span>
           </div>
           <div className="story"
@@ -66,11 +74,12 @@ class ReadableView extends Component {
                  borderBottom: '1px solid lightgray',
                  color: 'rgb(79, 79, 79)'}}>
             {this.props.readableById &&
-              this.props.readableById[this.props.id] &&
-              this.props.readableById[this.props.id].readable &&
-              this.props.readableById[this.props.id].readable.body}
+            this.props.readableById[this.props.id] &&
+            this.props.readableById[this.props.id].readable &&
+            this.props.readableById[this.props.id].readable.body}
           </div>
         </div>
+        <CommentsListView selectedReadable={this.props.id}/>
       </div>
     )
   }
@@ -89,5 +98,5 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReadableView));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReadableViewWithComments));
 
