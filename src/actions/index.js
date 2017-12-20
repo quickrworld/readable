@@ -267,6 +267,7 @@ export function fetchComments(readable) {
 }
 
 // readable upvote
+
 export function fetchReadableUpvote(id) {
   return function (dispatch) {
     dispatch(fetchReadableUpvoteRequest(id))

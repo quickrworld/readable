@@ -4,16 +4,18 @@ import {sortCommentsNewest, sortCommentsOldest, sortCommentsTopvoted} from '../a
 
 class CommentToplineMenu extends Component {
   render() {
+    const menuLabelStyle = {'cursor': 'pointer'}
+    const sortLineStyle = {gridColumnStart: '1', gridColumnEnd: '2'}
     return (
       <div className="comment-top-line" style={{
         display: 'grid',
         gridTemplateColumns: '1fr',
         gridTemplateRows: 'auto minmax(min-content, min-content)',
         paddingBottom: '6px'}}>
-        <div style={{gridColumnStart: '1', gridColumnEnd: '2'}}>
-          <span onClick={this.props.sortNewest} style={{'cursor': 'pointer'}}>
-            Newest</span> | <span onClick={this.props.sortOldest} style={{'cursor': 'pointer'}}>
-            Oldest</span> | <span onClick={this.props.sortTopvoted} style={{'cursor': 'pointer'}}>
+        <div style={sortLineStyle}>
+          <span onClick={this.props.sortNewest} style={menuLabelStyle}>
+            Newest</span> | <span onClick={this.props.sortOldest} style={menuLabelStyle}>
+            Oldest</span> | <span onClick={this.props.sortTopvoted} style={menuLabelStyle}>
             Top voted</span>
           <hr/>
         </div>

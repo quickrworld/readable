@@ -8,8 +8,11 @@ class UpvoteCommentView extends Component {
     this.props.upvoteComment(this.props.id)
   }
   render() {
+    const pointerStyle = {
+      'cursor': 'pointer'
+    }
     return (
-      <span onClick={this.upvote} style={{cursor: 'pointer'}}>
+      <span onClick={this.upvote} style={pointerStyle}>
         <FaThumbsOUp/>
       </span>
     )

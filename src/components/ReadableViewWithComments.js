@@ -16,15 +16,43 @@ class ReadableViewWithComments extends Component {
     }
   }
   render() {
+    const topLineStyle = {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gridTemplateRows: 'auto minmax(min-content, min-content)',
+      paddingBottom: '6px',
+    }
+    const titleStyle = {
+      gridColumnStart: '1',
+      gridColumnEnd: '2',
+      fontSize: '18px',
+      color: 'rgb(79, 79, 79)'
+    }
+    const editIconStyle = {
+      fontSize: '12pt',
+      color: 'rgb(79, 79, 79)'
+    }
+    const voteStyle = {
+      whiteSpace: 'nowrap',
+      color: 'rgb(79, 79, 79)'
+    }
+    const headlineStyle = {
+      gridColumnStart: '1',
+      gridColumnEnd: '2',
+      color: 'rgb(79, 79, 79)'
+    }
+    const storyStyle = {
+      gridColumnStart: '1',
+      gridColumnEnd: '3',
+      padding: '12px 0px 12px 0px',
+      fontSize: '14px',
+      borderBottom: '1px solid lightgray',
+      color: 'rgb(79, 79, 79)'
+    }
     return (
       <div>
-        <div className="top-line" style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gridTemplateRows: 'auto minmax(min-content, min-content)',
-          paddingBottom: '6px',
-        }}>
-          <div style={{gridColumnStart: '1', gridColumnEnd: '2', fontSize: '18px', color: 'rgb(79, 79, 79)'}}>
+        <div className="top-line" style={topLineStyle}>
+          <div style={titleStyle}>
             {this.props.readableById &&
             this.props.readableById[this.props.id] &&
             this.props.readableById[this.props.id].readable &&
@@ -35,11 +63,9 @@ class ReadableViewWithComments extends Component {
             gridColumnEnd: '3',
             textAlign: 'right',
             alignContent: 'center'}}>
-            <span style={{
-              fontSize: '12pt',
-              color: 'rgb(79, 79, 79)'}}><span role={'img'} aria-label=""><FaEdit/></span> ︎</span>
+            <span style={editIconStyle}><span role={'img'} aria-label=""><FaEdit/></span> ︎</span>
           </div>
-          <div style={{gridColumnStart: '1', gridColumnEnd: '2', color: 'rgb(79, 79, 79)'}}>
+          <div style={headlineStyle}>
             {this.props.readableById &&
             this.props.readableById[this.props.id] &&
             this.props.readableById[this.props.id].readable &&
@@ -53,7 +79,7 @@ class ReadableViewWithComments extends Component {
               this.props.readableById[this.props.id] &&
               this.props.readableById[this.props.id].readable &&
               this.props.readableById[this.props.id].readable.commentCount} Comments</span> |
-            <span style={{whiteSpace: 'nowrap', color: 'rgb(79, 79, 79)'}}><span>
+            <span style={voteStyle}><span>
               {this.props.readableById &&
               this.props.readableById[this.props.id] &&
               this.props.readableById[this.props.id].readable &&
@@ -66,13 +92,7 @@ class ReadableViewWithComments extends Component {
             </span>
           </div>
           <div className="story"
-               style={{
-                 gridColumnStart: '1',
-                 gridColumnEnd: '3',
-                 padding: '12px 0px 12px 0px',
-                 fontSize: '14px',
-                 borderBottom: '1px solid lightgray',
-                 color: 'rgb(79, 79, 79)'}}>
+               style={storyStyle}>
             {this.props.readableById &&
             this.props.readableById[this.props.id] &&
             this.props.readableById[this.props.id].readable &&

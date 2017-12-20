@@ -8,8 +8,9 @@ class DownvoteReadableView extends Component {
     this.props.downvoteReadable(this.props.readable.readable.id)
   }
   render() {
+    const pointerStyle = {cursor: 'pointer'}
     return (
-      <span onClick={this.downvote} style={{cursor: 'pointer'}}>
+      <span onClick={this.downvote} style={pointerStyle}>
         <FaThumbsODown/>
       </span>
     )

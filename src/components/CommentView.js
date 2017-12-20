@@ -5,22 +5,49 @@ import FaEdit from 'react-icons/lib/fa/edit'
 
 class CommentView extends Component {
   render() {
+    const topLineStyle = {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gridTemplateRows: 'auto minmax(min-content, min-content)',
+      paddingBottom: '6px',
+    }
+    const commentHeadingStyle = {
+      gridColumnStart: '1',
+      gridColumnEnd: '2',
+      color: 'rgb(79, 79, 79)',
+      alignContent: 'center',
+      paddingTop: '12px'
+    }
+    const commentVoteLineStyle = {
+      whiteSpace: 'nowrap',
+      color: 'rgb(79, 79, 79)'
+    }
+    const editButtonStyle = {
+      gridColumnStart: '2',
+      gridColumnEnd: '3',
+      textAlign: 'right',
+      alignContent: 'center',
+      paddingTop: '12px'
+    }
+    const editIconStyle = {
+      fontSize: '12pt',
+      color: 'rgb(79, 79, 79)'
+    }
+    const commentStoryStyle = {
+      gridColumnStart: '1',
+      gridColumnEnd: '3',
+      padding: '0px 0px 12px 0px',
+      fontSize: '14px',
+      borderBottom: '1px solid lightgray',
+      color: 'rgb(79, 79, 79)'
+    }
     return (
       <div>
-        <div className="top-line" style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gridTemplateRows: 'auto minmax(min-content, min-content)',
-          paddingBottom: '6px',
-        }}>
-          <div style={{
-            gridColumnStart: '1',
-            gridColumnEnd: '2',
-            color: 'rgb(79, 79, 79)',
-            paddingTop: '12px'}}>
+        <div className="top-line" style={topLineStyle}>
+          <div style={commentHeadingStyle}>
             {this.props.comment && this.props.comment.author && this.props.comment.author} |
             {this.props.comment && this.props.comment && new Date(this.props.comment.timestamp).toDateString()} |
-            <span style={{whiteSpace: 'nowrap', color: 'rgb(79, 79, 79)'}}><span>
+            <span style={commentVoteLineStyle}><span>
                 {this.props.comment &&
                 this.props.comment.voteScore} votes </span>
               <span role={'img'} aria-label="Up vote">
@@ -30,16 +57,15 @@ class CommentView extends Component {
               </span>
             </span>
           </div>
-          <div style={{gridColumnStart: '2', gridColumnEnd: '3', textAlign: 'right', alignContent: 'center'}}>
-            <span style={{fontSize: '12pt', color: 'rgb(79, 79, 79)'}}>
+          <div style={editButtonStyle}>
+            <span style={editIconStyle}>
               <span role={'img'} aria-label="">
                 <FaEdit/>
               </span>
             ︎</span>
           </div>
         </div>
-        <div className="story"
-             style={{gridColumnStart: '1', gridColumnEnd: '3', padding: '0px 0px 12px 0px', fontSize: '14px', borderBottom: '1px solid lightgray', color: 'rgb(79, 79, 79)'}}>
+        <div className="story" style={commentStoryStyle}>
           {this.props.comment &&
           this.props.comment.body &&
           this.props.comment.body}

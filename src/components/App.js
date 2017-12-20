@@ -16,8 +16,10 @@ import ReadableViewWithComments from "./ReadableViewWithComments"
 class App extends Component {
   componentDidMount() {
     this.props.fetchCategories()
-    this.props.selectCategory(this.props.selectedCategory)
-    this.props.fetchReadables(this.props.selectedCategory)
+    if(this.props.selectedCategory) {
+      this.props.selectCategory(this.props.selectedCategory)
+      this.props.fetchReadables(this.props.selectedCategory)
+    }
   }
   render() {
     const gridStyle = {
@@ -72,7 +74,7 @@ class App extends Component {
     }
     return (
       <Router>
-      <div id={'grid'} style={gridStyle}>
+        <div id={'grid'} style={gridStyle}>
         <div id="sidebar" style={sidebarStyle}>
           <div id="logo" style={{
             fontWeight: 'lighter',
@@ -97,7 +99,7 @@ class App extends Component {
           </div>
         </div>
         <div style={contentStyle}>
-          <ContentHeader/>
+          <ContentHeader selectedCategory={this.props.category}/>
           <div className="content-main" style={contentMainStyle}>
             <div className="main-content" style={mainContentStyle}>
               <div>

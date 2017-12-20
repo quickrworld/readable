@@ -23,21 +23,7 @@ class ReadablesListView extends Component {
     }
   }
   render() {
-    const readables = this.props.readables.readables // this.props.readables.order ?
-      // this.props.readables.readables
-      // .sort((r1, r2) => {
-      //   if (this.props.readables.order === SORT_READABLES_NEWEST) {
-      //     return r1.timestamp < r2.timestamp ? 1: -1
-      //   }
-      //   if (this.props.readables.order === SORT_READABLES_OLDEST) {
-      //     return r1.timestamp > r2.timestamp ? 1: -1
-      //   }
-      //   if (this.props.readables.order === SORT_READABLES_TOPVOTED) {
-      //     return r1.voteScore < r2.voteScore ? 1: -1
-      //   }
-      //   return r1.timestamp > r2.timestamp ? 1: -1
-      // })
-      // : this.props.readables.readables
+    const readables = this.props.readables.readables
     return (
       <div>
         {readables.map((readable) => (

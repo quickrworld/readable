@@ -14,21 +14,21 @@ import {
   FETCH_READABLE_SUCCESS,
   FETCH_READABLE_FAILURE,
   UPVOTE_READABLE,
-  FETCH_READABLE_UPVOTE_REQUEST,
+  // FETCH_READABLE_UPVOTE_REQUEST,
   FETCH_READABLE_UPVOTE_SUCCESS,
-  FETCH_READABLE_UPVOTE_FAILURE,
+  // FETCH_READABLE_UPVOTE_FAILURE,
   DOWNVOTE_READABLE,
-  FETCH_READABLE_DOWNVOTE_REQUEST,
+  // FETCH_READABLE_DOWNVOTE_REQUEST,
   FETCH_READABLE_DOWNVOTE_SUCCESS,
-  FETCH_READABLE_DOWNVOTE_FAILURE,
+  // FETCH_READABLE_DOWNVOTE_FAILURE,
   UPVOTE_COMMENT,
-  FETCH_COMMENT_UPVOTE_REQUEST,
+  // FETCH_COMMENT_UPVOTE_REQUEST,
   FETCH_COMMENT_UPVOTE_SUCCESS,
-  FETCH_COMMENT_UPVOTE_FAILURE,
+  // FETCH_COMMENT_UPVOTE_FAILURE,
   DOWNVOTE_COMMENT,
-  FETCH_COMMENT_DOWNVOTE_REQUEST,
+  // FETCH_COMMENT_DOWNVOTE_REQUEST,
   FETCH_COMMENT_DOWNVOTE_SUCCESS,
-  FETCH_COMMENT_DOWNVOTE_FAILURE,
+  // FETCH_COMMENT_DOWNVOTE_FAILURE,
   SORT_READABLES_NEWEST,
   SORT_READABLES_OLDEST,
   SORT_READABLES_TOPVOTED,
@@ -80,7 +80,10 @@ function allCategories(state = {
 }
 
 // readables
-function selectedCategory(state = 'all', action) {
+function selectedCategory(state, action) {
+  if(!state) {
+    state = 'all'
+  }
   switch (action.type) {
     case SELECT_CATEGORY:
       return action.category ? action.category : state
@@ -157,7 +160,8 @@ function readableById(state = {
       }
       return state
     case UPVOTE_READABLE:
-      return state // we might want to update the value of voteCount for the matching readable (local copy)
+      // we might also want to update the value of voteCount for the matching readable (local copy)
+      return state
     case FETCH_READABLE_UPVOTE_SUCCESS:
       let upvotedState = Object.assign({}, state)
       upvotedState[action.id] = {
@@ -189,10 +193,13 @@ function readablesByCategory(state = {
     case FETCH_READABLES_SUCCESS:
     case FETCH_READABLES_REQUEST:
       if (action.category) {
-        return Object.assign({}, state, {
+        let value = Object.assign({}, state, {
           [action.category]: readables(state[action.category], action),
-          'selectedCategory': action.category
         })
+        if (!state.selectedCategory) {
+          value.selectedCategory = action.category
+        }
+        return value
       }
       return state
     case SORT_READABLES_NEWEST:
@@ -284,9 +291,10 @@ function commentsByReadable(state = {}, action) {
 const reducer = combineReducers({
   allCategories,
   readablesByCategory,
-  selectedCategory,
+
   readableById,
-  commentsByReadable
+  commentsByReadable,
+  selectedCategory,
 })
 
 export default reducer

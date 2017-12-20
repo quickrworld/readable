@@ -22,20 +22,7 @@ class CommentsListView extends Component {
     }
   }
   render() {
-    const comments = this.props.comments.order
-      ? this.props.comments.comments.sort((c1, c2) => {
-        if (this.props.comments.order === SORT_COMMENTS_NEWEST) {
-          return (c1.timestamp < c2.timestamp) ? 1 : -1
-        }
-        if (this.props.comments.order === SORT_COMMENTS_OLDEST) {
-          return (c1.timestamp > c2.timestamp) ? 1 : -1
-        }
-        if (this.props.comments.order === SORT_COMMENTS_TOPVOTED) {
-          return (c1.voteScore < c2.voteScore) ? 1 : -1
-        }
-        return c1.timestamp < c2.timestamp
-      })
-      : this.props.comments.comments
+    const comments = this.props.comments.comments
     return (
       <div>
         <CommentToplineMenu/>
@@ -52,16 +39,35 @@ class CommentsListView extends Component {
 function mapStateToProps(state, ownProps) {
   const { commentsByReadable } = state
   const selectedReadable = ownProps.selectedReadable
+  const sortedComments = commentsByReadable.order
+    ? (commentsByReadable[selectedReadable] &&
+      commentsByReadable[selectedReadable].items ?
+      Object.keys(commentsByReadable[selectedReadable].items).reduce((comments, comment) => {
+        comments.push(commentsByReadable[selectedReadable].items[comment])
+        return comments
+      }, []) : []).sort((c1, c2) => {
+      if (commentsByReadable.order === SORT_COMMENTS_NEWEST) {
+        return (c1.timestamp < c2.timestamp) ? 1 : -1
+      }
+      if (commentsByReadable.order === SORT_COMMENTS_OLDEST) {
+        return (c1.timestamp > c2.timestamp) ? 1 : -1
+      }
+      if (commentsByReadable.order === SORT_COMMENTS_TOPVOTED) {
+        return (c1.voteScore < c2.voteScore) ? 1 : -1
+      }
+      return c1.timestamp < c2.timestamp
+    })
+    : commentsByReadable[selectedReadable] &&
+      commentsByReadable[selectedReadable].items ?
+      Object.keys(commentsByReadable[selectedReadable].items).reduce((comments, comment) => {
+        comments.push(commentsByReadable[selectedReadable].items[comment])
+        return comments
+      }, []) : []
   const comments = selectedReadable
     ? {
         isFetching: commentsByReadable[selectedReadable] ? commentsByReadable[selectedReadable].isFetching : false,
         lastUpdated: commentsByReadable[selectedReadable] ? commentsByReadable[selectedReadable].lastUpdated : 0,
-        comments: commentsByReadable[selectedReadable] &&
-                  commentsByReadable[selectedReadable].items ?
-                  Object.keys(commentsByReadable[selectedReadable].items).reduce((comments, comment) => {
-                    comments.push(commentsByReadable[selectedReadable].items[comment])
-                    return comments
-                  }, []) : [],
+        comments: sortedComments,
         order: commentsByReadable.order ? commentsByReadable.order : SORT_COMMENTS_NEWEST
       }
     : {

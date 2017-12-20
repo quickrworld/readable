@@ -4,20 +4,34 @@ import {sortReadablesNewest, sortReadablesOldest, sortReadablesTopvoted} from ".
 
 class ToplineMenu extends Component {
   render() {
+    const topLineStyle = {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gridTemplateRows: 'auto minmax(min-content, min-content)',
+      paddingBottom: '6px'
+    }
+    const sortLineStyle = {
+      gridColumnStart: '1',
+      gridColumnEnd: '2'
+    }
+    const newReadableButtonStyle = {
+      gridColumnStart: '2',
+      gridColumnEnd: '3',
+      textAlign: 'right'
+    }
+    const pointerStyle = {
+      'cursor': 'pointer'
+    }
     return (
-      <div className="top-line" style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gridTemplateRows: 'auto minmax(min-content, min-content)',
-        paddingBottom: '6px'}}>
-        <div style={{gridColumnStart: '1', gridColumnEnd: '2'}}>
-          <span onClick={this.props.sortNewest} style={{'cursor': 'pointer'}}>
-            Newest</span> | <span onClick={this.props.sortOldest} style={{'cursor': 'pointer'}}>
-            Oldest</span> | <span onClick={this.props.sortTopvoted} style={{'cursor': 'pointer'}}>
+      <div className="top-line" style={topLineStyle}>
+        <div style={sortLineStyle}>
+          <span onClick={this.props.sortNewest} style={pointerStyle}>
+            Newest</span> | <span onClick={this.props.sortOldest} style={pointerStyle}>
+            Oldest</span> | <span onClick={this.props.sortTopvoted} style={pointerStyle}>
             Top voted</span>
           <hr/>
         </div>
-        <div style={{gridColumnStart: '2', gridColumnEnd: '3', textAlign: 'right'}}>
+        <div style={newReadableButtonStyle}>
           New Readable
           <hr/>
         </div>
