@@ -1,3 +1,5 @@
+import uuidv4 from 'uuid/v4'
+
 export const FETCH_CATEGORIES_REQUEST = 'FETCH_CATEGORIES_REQUEST'
 export const FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS'
 export const FETCH_CATEGORIES_FAILURE = 'FETCH_CATEGORIES_FAILURE'
@@ -43,6 +45,10 @@ export const SORT_READABLES_TOPVOTED = 'SORT_READABLES_TOPVOTED'
 export const SORT_COMMENTS_NEWEST = 'SORT_COMMENTS_NEWEST'
 export const SORT_COMMENTS_OLDEST = 'SORT_COMMENTS_OLDEST'
 export const SORT_COMMENTS_TOPVOTED = 'SORT_COMMENTS_TOPVOTED'
+
+export const FETCH_ADD_COMMENT = 'FETCH_ADD_COMMENT'
+export const FETCH_COMMENT_ADD_SUCCESS = 'FETCH_COMMENT_ADD_SUCCESS'
+export const FETCH_COMMENT_ADD_FAILURE = 'FETCH_COMMENT_ADD_FAILURE'
 
 // Categories
 export function fetchCategoriesRequest() {
@@ -535,4 +541,51 @@ export function sortCommentsTopvoted() {
   }
 }
 
+// add comment
+export function fetchAddComment(data) {
+  return function(dispatch) {
+    const url = 'http://localhost:3001/comments'
+    const body = {
+      id: uuidv4(),
+      body: data.comment,
+      author: data.author,
+      parentId: data.readable,
+      timestamp: Date.now(),
+    }
+    return fetch(
+      url, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': 'quickrworld',
+        }
+      }
+    )
+    .then(
+      response => response.json(),
+      error => ({ 'error': error })
+    )
+    .then(
+      json => json['error']
+        ? dispatch(fetchCommentAddFailure(json))
+        : dispatch(fetchCommentAddSuccess(json))
+    )
+  }
+}
 
+export function fetchCommentAddSuccess(json) {
+  console.log('success', json)
+  return {
+    type: FETCH_COMMENT_ADD_SUCCESS,
+    comment: json
+  }
+}
+
+export function fetchCommentAddFailure(json) {
+  console.log('failure', json)
+  return {
+    type: FETCH_COMMENT_ADD_FAILURE,
+    error: json
+  }
+}

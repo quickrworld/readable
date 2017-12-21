@@ -35,6 +35,8 @@ import {
   SORT_COMMENTS_NEWEST,
   SORT_COMMENTS_OLDEST,
   SORT_COMMENTS_TOPVOTED,
+  FETCH_COMMENT_ADD_SUCCESS,
+  FETCH_COMMENT_ADD_FAILURE
 } from "../actions";
 
 // categories
@@ -216,11 +218,17 @@ function readablesByCategory(state = {
       })
     case FETCH_READABLE_UPVOTE_SUCCESS:
       let upvotedState = Object.assign({}, state)
-      upvotedState[state.selectedCategory].items[action.readable.id] = action.readable
+      if(upvotedState[state.selectedCategory] &&
+        upvotedState[state.selectedCategory].items) {
+        upvotedState[state.selectedCategory].items[action.readable.id] = action.readable
+      }
       return upvotedState
     case FETCH_READABLE_DOWNVOTE_SUCCESS:
       let downvotedState = Object.assign({}, state)
-      downvotedState[state.selectedCategory].items[action.readable.id] = action.readable
+      if(downvotedState[state.selectedCategory] &&
+        downvotedState[state.selectedCategory].items) {
+        downvotedState[state.selectedCategory].items[action.readable.id] = action.readable
+      }
       return downvotedState
     default:
       return state
@@ -282,6 +290,14 @@ function commentsByReadable(state = {}, action) {
       return Object.assign({}, state, {
         'order': SORT_COMMENTS_TOPVOTED
       })
+    case FETCH_COMMENT_ADD_SUCCESS:
+      console.log('state', state)
+      console.log('action', action)
+      let newState = Object.assign({}, state)
+      newState[action.comment.parentId].items[action.comment.id] = action.comment
+      return newState
+    case FETCH_COMMENT_ADD_FAILURE:
+      return state // need to update any fetching flags to false
     default:
       return state
   }

@@ -6,6 +6,7 @@ import CommentsListView from './CommentsListView'
 import UpvoteReadableView from './UpvoteReadableView'
 import DownvoteReadableView from './DownvoteReadableView'
 import FaEdit from 'react-icons/lib/fa/edit'
+import EditorView from './EditorView'
 
 class ReadableViewWithComments extends Component {
   componentDidMount() {
@@ -63,7 +64,8 @@ class ReadableViewWithComments extends Component {
             gridColumnEnd: '3',
             textAlign: 'right',
             alignContent: 'center'}}>
-            <span style={editIconStyle}><span role={'img'} aria-label=""><FaEdit/></span> ︎</span>
+            <span style={editIconStyle}><span role={'img'} aria-label="">
+              <button><FaEdit/></button></span> ︎</span>
           </div>
           <div style={headlineStyle}>
             {this.props.readableById &&
@@ -99,6 +101,9 @@ class ReadableViewWithComments extends Component {
             this.props.readableById[this.props.id].readable.body}
           </div>
         </div>
+        <div style={{gridRow:'2', gridColumnStart:'1', gridColumnEnd:'3'}}>
+          <EditorView readable={this.props.id}/>
+        </div>
         <CommentsListView selectedReadable={this.props.id}/>
       </div>
     )
@@ -114,7 +119,8 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
   return {
     selectReadable: (id) => dispatch(selectReadable(id)),
-    fetchReadable: (id) => dispatch(fetchReadable(id))
+    fetchReadable: (id) => dispatch(fetchReadable(id)),
+    // saveEditedComment: () => dispatch(fetchEditComment()),
   }
 }
 

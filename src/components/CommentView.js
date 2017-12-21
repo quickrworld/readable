@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import UpvoteCommentView from './UpvoteCommentView'
 import DownvoteCommentView from './DownvoteCommentView'
 import FaEdit from 'react-icons/lib/fa/edit'
-
 class CommentView extends Component {
   render() {
     const topLineStyle = {
@@ -59,8 +58,10 @@ class CommentView extends Component {
           </div>
           <div style={editButtonStyle}>
             <span style={editIconStyle}>
-              <span role={'img'} aria-label="">
-                <FaEdit/>
+              <span role={'img'} aria-label="Edit comment">
+                <button onClick={() => this.openEditor()}>
+                  <FaEdit/>
+                </button>
               </span>
             ︎</span>
           </div>
