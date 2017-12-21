@@ -1,10 +1,37 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {fetchAddComment} from '../actions'
+import {fetchEditComment} from '../actions'
 
 class EditorView extends Component {
   addComment = () => {
-    this.props.addComment({readable: this.props.readable, author: this.authorInput.value, comment: this.commentTextArea.value})
+    if(!this.authorInput.value || !this.commentTextArea.value) {
+      return
+    }
+    this.props.addComment({
+      readable: this.props.readable,
+      author: this.authorInput.value,
+      comment: this.commentTextArea.value
+    })
+    // test code: this should be done on success / failure (for failure case a message should be shown)
+    if (this.props.close) {
+      this.props.close()
+    }
+  }
+  editComment = () => {
+    if(!this.authorInput.value || !this.commentTextArea.value) {
+      return
+    }
+    this.props.editComment({
+      id: this.props.id,
+      readable: this.props.readable,
+      author: this.authorInput.value,
+      comment: this.commentTextArea.value
+    })
+    // test code
+    if (this.props.close) {
+      this.props.close()
+    }
   }
   render() {
     const editorStyle = {
@@ -21,7 +48,9 @@ class EditorView extends Component {
           gridColumnStart: '1',
           gridColumnEnd: '3',
         }}><span style={{paddingRight: '4px'}}>Comment as </span>
-          <input ref={(input) => {this.authorInput = input}} type={'text'} name={'author'} placeholder={'Your name'}>
+          <input
+            ref={(input) => {this.authorInput = input}} type={'text'} name={'author'} placeholder={'Your name'}
+            defaultValue={this.props.author ? this.props.author : ''}>
           </input>
         </div>
         <div style={{
@@ -31,7 +60,10 @@ class EditorView extends Component {
           paddingTop: '12px',
           marginRight: '12px'
         }}>
-          <textarea ref={(textarea) => {this.commentTextArea = textarea}} rows={'5'} placeholder={'Your comment'} style={{
+          <textarea
+            ref={(textarea) => {this.commentTextArea = textarea}} rows={'5'} placeholder={'Your comment'}
+            defaultValue={this.props.story ? this.props.story : ''}
+            style={{
               border: '1px solid lightgray',
               overflowY: 'auto',
               width: '100%',
@@ -42,7 +74,7 @@ class EditorView extends Component {
           </textarea>
         </div>
         <div style={{gridRow:'3', gridColumnStart:'4', justifySelf: 'end', paddingRight: '6px'}}>
-          <button onClick={this.addComment} style={{align:'right'}}>Comment</button>
+          <button onClick={this.props.id ? this.editComment : this.addComment} style={{align:'right'}}>Comment</button>
         </div>
       </div>
     )
@@ -51,7 +83,8 @@ class EditorView extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addComment: (data) => dispatch(fetchAddComment(data))
+    addComment: (data) => dispatch(fetchAddComment(data)),
+    editComment: (data) => dispatch(fetchEditComment(data))
   }
 }
 

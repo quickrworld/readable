@@ -36,7 +36,9 @@ import {
   SORT_COMMENTS_OLDEST,
   SORT_COMMENTS_TOPVOTED,
   FETCH_COMMENT_ADD_SUCCESS,
-  FETCH_COMMENT_ADD_FAILURE
+  FETCH_COMMENT_ADD_FAILURE,
+  FETCH_COMMENT_EDIT_SUCCESS,
+  FETCH_COMMENT_EDIT_FAILURE,
 } from "../actions";
 
 // categories
@@ -291,13 +293,17 @@ function commentsByReadable(state = {}, action) {
         'order': SORT_COMMENTS_TOPVOTED
       })
     case FETCH_COMMENT_ADD_SUCCESS:
-      console.log('state', state)
-      console.log('action', action)
       let newState = Object.assign({}, state)
       newState[action.comment.parentId].items[action.comment.id] = action.comment
       return newState
     case FETCH_COMMENT_ADD_FAILURE:
       return state // need to update any fetching flags to false
+    case FETCH_COMMENT_EDIT_SUCCESS:
+      let editedState = Object.assign({}, state)
+      editedState[action.comment.parentId].items[action.comment.id] = action.comment
+      return editedState
+    case FETCH_COMMENT_EDIT_FAILURE:
+      return state
     default:
       return state
   }

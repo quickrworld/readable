@@ -50,6 +50,10 @@ export const FETCH_ADD_COMMENT = 'FETCH_ADD_COMMENT'
 export const FETCH_COMMENT_ADD_SUCCESS = 'FETCH_COMMENT_ADD_SUCCESS'
 export const FETCH_COMMENT_ADD_FAILURE = 'FETCH_COMMENT_ADD_FAILURE'
 
+export const FETCH_EDIT_COMMENT = 'FETCH_EDIT_COMMENT'
+export const FETCH_COMMENT_EDIT_SUCCESS = 'FETCH_COMMENT_EDIT_SUCCESS'
+export const FETCH_COMMENT_EDIT_FAILURE = 'FETCH_COMMENT_EDIT_FAILURE'
+
 // Categories
 export function fetchCategoriesRequest() {
   return {
@@ -575,7 +579,6 @@ export function fetchAddComment(data) {
 }
 
 export function fetchCommentAddSuccess(json) {
-  console.log('success', json)
   return {
     type: FETCH_COMMENT_ADD_SUCCESS,
     comment: json
@@ -583,9 +586,53 @@ export function fetchCommentAddSuccess(json) {
 }
 
 export function fetchCommentAddFailure(json) {
-  console.log('failure', json)
   return {
     type: FETCH_COMMENT_ADD_FAILURE,
+    error: json
+  }
+}
+
+// edit comment
+export function fetchEditComment(data) {
+  return function(dispatch) {
+    const url = `http://localhost:3001/comments/${data.id}`
+    const body = {
+      id: data.id,
+      body: data.comment,
+      timestamp: Date.now(),
+    }
+    return fetch(
+      url, {
+        method: 'PUT',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': 'quickrworld',
+        }
+      }
+    )
+    .then(
+      response => { const json = response.json(); return json },
+      error => ({ 'error': error })
+    )
+    .then(
+      json => json['error']
+        ? dispatch(fetchCommentEditFailure(json))
+        : dispatch(fetchCommentEditSuccess(json))
+    )
+  }
+}
+
+export function fetchCommentEditSuccess(json) {
+  return {
+    type: FETCH_COMMENT_EDIT_SUCCESS,
+    comment: json
+  }
+}
+
+export function fetchCommentEditFailure(json) {
+  return {
+    type: FETCH_COMMENT_EDIT_FAILURE,
     error: json
   }
 }
