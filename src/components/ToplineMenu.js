@@ -1,8 +1,18 @@
 import React, { Component } from 'react'
-import {connect} from "react-redux";
-import {sortReadablesNewest, sortReadablesOldest, sortReadablesTopvoted} from "../actions";
+import {connect} from 'react-redux'
+import {sortReadablesNewest, sortReadablesOldest, sortReadablesTopvoted} from '../actions'
+import ReadableEditorView from './ReadableEditorView'
 
 class ToplineMenu extends Component {
+  state = {
+    editorOpen: false
+  }
+  openEditor = () => {
+    this.setState({editorOpen: true})
+  }
+  closeEditor = () => {
+    this.setState({editorOpen: false})
+  }
   render() {
     const topLineStyle = {
       display: 'grid',
@@ -32,8 +42,13 @@ class ToplineMenu extends Component {
           <hr/>
         </div>
         <div style={newReadableButtonStyle}>
-          New Readable
+          <button onClick={() => this.openEditor()} style={{borderWidth: '0px'}}>New Readable</button>
           <hr/>
+        </div>
+        <div style={{display: this.state.editorOpen ? 'block' : 'none', gridColumnStart:'1', gridColumnEnd: '5'}}>
+          <ReadableEditorView
+            close={this.closeEditor}
+          />
         </div>
       </div>
     )

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import CategoryView from './CategoryView'
-import { withRouter } from 'react-router-dom'
 
 class CategoryListView extends Component {
   render() {
@@ -10,7 +9,9 @@ class CategoryListView extends Component {
         <div><CategoryView category={{'name': 'All Categories', 'path':'all'}}/></div>
           {this.props.categories.categories.map((category) => (
             <div key={category.path} >
-              <CategoryView category={category}/>
+              <CategoryView
+                category={category}
+                active={category.path === this.props.selectedCategory}/>
             </div>
           ))}
       </div>
@@ -31,4 +32,5 @@ function mapStateToProps(state) {
   return { categories, selectedCategory }
 }
 
-export default withRouter(connect(mapStateToProps)(CategoryListView))
+// export default withRouter(connect(mapStateToProps)(CategoryListView))
+export default connect(mapStateToProps)(CategoryListView)

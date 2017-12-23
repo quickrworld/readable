@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import CategoriesListView from './CategoriesListView'
 import ReadablesListView from './ReadablesListView'
@@ -129,8 +128,10 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  const { selectedCategory } = state
-  return { selectedCategory }
+  if(state.readablesByCategory && state.readablesByCategory.selectedCategory) {
+    return state.readablesByCategory.selectedCategory
+  }
+  return {}
 }
 
 function mapDispatchToProps(dispatch) {
@@ -141,4 +142,5 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
+export default connect(mapStateToProps, mapDispatchToProps)(App)

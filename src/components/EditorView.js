@@ -13,7 +13,10 @@ class EditorView extends Component {
       author: this.authorInput.value,
       comment: this.commentTextArea.value
     })
-    // test code: this should be done on success / failure (for failure case a message should be shown)
+    // TODO
+    // success => close
+    // failure => display message. Do not close. Provide a close button.
+    // animate close
     if (this.props.close) {
       this.props.close()
     }

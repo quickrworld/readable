@@ -113,6 +113,9 @@ class ReadableViewWithComments extends Component {
 function mapStateToProps(state, ownProps) {
   const selectedReadable = ownProps.id
   const { readable, readableById  } = state
+  if(readable && readable.category) {
+    return { selectedReadable, readable, readableById, category: readable.category }
+  }
   return { selectedReadable, readable, readableById }
 }
 
@@ -120,7 +123,6 @@ function mapDispatchToProps(dispatch) {
   return {
     selectReadable: (id) => dispatch(selectReadable(id)),
     fetchReadable: (id) => dispatch(fetchReadable(id)),
-    // saveEditedComment: () => dispatch(fetchEditComment()),
   }
 }
 

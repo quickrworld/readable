@@ -54,6 +54,14 @@ export const FETCH_EDIT_COMMENT = 'FETCH_EDIT_COMMENT'
 export const FETCH_COMMENT_EDIT_SUCCESS = 'FETCH_COMMENT_EDIT_SUCCESS'
 export const FETCH_COMMENT_EDIT_FAILURE = 'FETCH_COMMENT_EDIT_FAILURE'
 
+export const FETCH_ADD_READABLE = 'FETCH_ADD_READABLE'
+export const FETCH_READABLE_ADD_SUCCESS = 'FETCH_READABLE_ADD_SUCCESS'
+export const FETCH_READABLE_ADD_FAILURE = 'FETCH_READABLE_ADD_FAILURE'
+
+export const FETCH_EDIT_READABLE = 'FETCH_EDIT_READABLE'
+export const FETCH_READABLE_EDIT_SUCCESS = 'FETCH_READABLE_EDIT_SUCCESS'
+export const FETCH_READABLE_EDIT_FAILURE = 'FETCH_READABLE_EDIT_FAILURE'
+
 // Categories
 export function fetchCategoriesRequest() {
   return {
@@ -277,7 +285,6 @@ export function fetchComments(readable) {
 }
 
 // readable upvote
-
 export function fetchReadableUpvote(id) {
   return function (dispatch) {
     dispatch(fetchReadableUpvoteRequest(id))
@@ -526,7 +533,6 @@ export function sortReadablesTopvoted() {
 }
 
 // sort comments
-
 export function sortCommentsNewest() {
   return {
     type: SORT_COMMENTS_NEWEST
@@ -633,6 +639,98 @@ export function fetchCommentEditSuccess(json) {
 export function fetchCommentEditFailure(json) {
   return {
     type: FETCH_COMMENT_EDIT_FAILURE,
+    error: json
+  }
+}
+
+// add readable
+export function fetchAddReadable(data) {
+  return function(dispatch) {
+    const url = `http://localhost:3001/posts/`
+    const body = {
+      id: uuidv4(),
+      body: data.body,
+      author: data.author,
+      title: data.title,
+      category: data.category,
+      timestamp: Date.now(),
+    }
+    return fetch(
+      url, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': 'quickrworld',
+        }
+      }
+    )
+    .then(
+      response => { const json = response.json(); return json },
+      error => ({ 'error': error })
+    )
+    .then(
+      json => json['error']
+        ? dispatch(fetchReadableAddFailure(json))
+        : dispatch(fetchReadableAddSuccess(json))
+    )
+  }
+}
+
+export function fetchReadableAddSuccess(json) {
+  return {
+    type: FETCH_READABLE_ADD_SUCCESS,
+    readable: json
+  }
+}
+
+export function fetchReadableAddFailure(json) {
+  return {
+    type: FETCH_READABLE_ADD_FAILURE,
+    error: json
+  }
+}
+
+// edit readable
+export function fetchEditReadable(data) {
+  return function(dispatch) {
+    const url = `http://localhost:3001/posts/${data.id}`
+    const body = {
+      title: data.title,
+      body: data.body,
+    }
+    return fetch(
+      url, {
+        method: 'PUT',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': 'quickrworld',
+        }
+      }
+    )
+    .then(
+      response => response.json(),
+      error => ({ 'error': error })
+    )
+    .then(
+      json => json['error']
+        ? dispatch(fetchReadableEditFailure(json))
+        : dispatch(fetchReadableEditSuccess(json))
+    )
+  }
+}
+
+export function fetchReadableEditSuccess(json) {
+  return {
+    type: FETCH_READABLE_EDIT_SUCCESS,
+    readable: json
+  }
+}
+
+export function fetchReadableEditFailure(json) {
+  return {
+    type: FETCH_READABLE_EDIT_FAILURE,
     error: json
   }
 }

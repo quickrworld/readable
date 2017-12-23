@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import {withRouter} from "react-router-dom"
 import {connect} from "react-redux"
 
 class ContentHeader extends Component {
@@ -25,20 +24,33 @@ class ContentHeader extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  const { selectedCategory, allCategories  } = state
+  // if(state.readablesByCategory && state.readablesByCategory.selectedCategory) {
+  //   if(state.readablesByCategory.selectedCategory === 'all') {
+  //     return { 'category': 'All Categories' }
+  //   }
+  //   if(state.allCategories &&
+  //     state.allCategories.items &&
+  //     state.allCategories.items[state.readablesByCategory.selectedCategory]) {
+  //     return  { 'category': state.allCategories.items[state.readablesByCategory.selectedCategory].name }
+  //   }
+  // }
 
-  if (allCategories.items[ownProps.selectedCategory] &&
-      allCategories.items[selectedCategory]) {
-    return { 'category': allCategories.items[selectedCategory].name }
+  const { selectedCategory, allCategories } = state
+
+  const category = ownProps.selectedCategory ? ownProps.selectedCategory : selectedCategory
+
+  if (allCategories.items[category] && allCategories.items[category]) {
+    return { 'category': allCategories.items[category].name }
   }
-  if (allCategories.items[selectedCategory]) {
-    return { 'category': allCategories.items[selectedCategory].name }
+  if (allCategories.items[category]) {
+    return { 'category': allCategories.items[category].name }
   }
-  if(selectedCategory === 'all') {
+  if(category === 'all') {
     return { 'category': 'All Categories' }
   }
-  return { 'category': 'No category selected' }
+  return { 'category': '' }
 }
 
-export default withRouter(connect(mapStateToProps)(ContentHeader));
+//export default withRouter(connect(mapStateToProps)(ContentHeader))
+export default connect(mapStateToProps)(ContentHeader)
 

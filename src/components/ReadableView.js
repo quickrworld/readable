@@ -5,8 +5,19 @@ import {connect} from 'react-redux'
 import FaEdit from 'react-icons/lib/fa/edit'
 import UpvoteReadableView from './UpvoteReadableView'
 import DownvoteReadableView from './DownvoteReadableView'
+import { NavLink } from 'react-router-dom'
+import ReadableEditorView from './ReadableEditorView'
 
 class ReadableView extends Component {
+  state = {
+    editorOpen: false
+  }
+  openEditor = () => {
+    this.setState({editorOpen: true})
+  }
+  closeEditor = () => {
+    this.setState({editorOpen: false})
+  }
   componentDidMount() {
     const id = this.props.id
     if(id) {
@@ -15,6 +26,23 @@ class ReadableView extends Component {
     }
   }
   render() {
+    const id=this.props.id
+    const author = (this.props.readableById &&
+      this.props.readableById[this.props.id] &&
+      this.props.readableById[this.props.id].readable &&
+      this.props.readableById[this.props.id].readable.author)
+    const title=(this.props.readableById &&
+      this.props.readableById[this.props.id] &&
+      this.props.readableById[this.props.id].readable &&
+      this.props.readableById[this.props.id].readable.title)
+    const story=(this.props.readableById &&
+      this.props.readableById[this.props.id] &&
+      this.props.readableById[this.props.id].readable &&
+      this.props.readableById[this.props.id].readable.body)
+    const category=(this.props.readableById &&
+      this.props.readableById[this.props.id] &&
+      this.props.readableById[this.props.id].readable &&
+      this.props.readableById[this.props.id].readable.category)
     const topLineStyle = {
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',
@@ -64,7 +92,11 @@ class ReadableView extends Component {
               this.props.readableById[this.props.id].readable.title}
           </div>
           <div style={editIconStyle}>
-            <span style={editLabelStyle}><span role={'img'} aria-label=""><FaEdit/></span></span>
+            <span style={editLabelStyle}>
+              <button onClick={() => this.openEditor()} style={{borderWidth: '0px'}}>
+                <FaEdit/>
+              </button>
+            </span>
           </div>
           <div style={headlineStyle}>
             {this.props.readableById &&
@@ -92,11 +124,29 @@ class ReadableView extends Component {
             </span>
           </div>
           <div className="story" style={storyStyle}>
-            {this.props.readableById &&
-              this.props.readableById[this.props.id] &&
-              this.props.readableById[this.props.id].readable &&
-              this.props.readableById[this.props.id].readable.body}
+            <NavLink
+              style={{textDecoration: 'none'}}
+              activeStyle={{textDecoration: 'none'}}
+              to={{
+                pathname: `/posts/${this.props.id}`,
+              }}>
+              {this.props.readableById &&
+                this.props.readableById[this.props.id] &&
+                this.props.readableById[this.props.id].readable &&
+                this.props.readableById[this.props.id].readable.body}
+            </NavLink>
           </div>
+        </div>
+        <div style={{
+          display: this.state.editorOpen ? 'block' : 'none',
+          gridColumnStart:'1', gridColumnEnd: '5', borderBottom: '1px solid lightgray', marginBottom: '12px'}}>
+          <ReadableEditorView
+            id={id}
+            author={author}
+            title={title}
+            story={story}
+            category={category}
+            close={this.closeEditor}/>
         </div>
       </div>
     )

@@ -39,6 +39,10 @@ import {
   FETCH_COMMENT_ADD_FAILURE,
   FETCH_COMMENT_EDIT_SUCCESS,
   FETCH_COMMENT_EDIT_FAILURE,
+  FETCH_READABLE_ADD_SUCCESS,
+  // FETCH_READABLE_ADD_FAILURE,
+  FETCH_READABLE_EDIT_SUCCESS,
+  // FETCH_READABLE_EDIT_FAILURE
 } from "../actions";
 
 // categories
@@ -184,6 +188,22 @@ function readableById(state = {
         readable: action.readable
       }
       return downvotedState
+    case FETCH_READABLE_ADD_SUCCESS:
+      let readableAddedState = Object.assign({}, state)
+      readableAddedState[action.id] = {
+        isFetching: false,
+        lastUpdated: action.readable.timestamp,
+        readable: action.readable
+      }
+      return readableAddedState
+    case FETCH_READABLE_EDIT_SUCCESS:
+      let readableEditedState = Object.assign({}, state)
+      readableEditedState[action.id] = {
+        isFetching: false,
+        lastUpdated: action.readable.timestamp,
+        readable: action.readable
+      }
+      return readableEditedState
     default:
       return state
   }
@@ -232,6 +252,40 @@ function readablesByCategory(state = {
         downvotedState[state.selectedCategory].items[action.readable.id] = action.readable
       }
       return downvotedState
+    case FETCH_READABLE_ADD_SUCCESS:
+      let readableAddedState = Object.assign({}, state)
+      if(readableAddedState[action.readable.category] &&
+        readableAddedState[action.readable.category].items) {
+        readableAddedState[action.readable.category].items[action.readable.id] = action.readable
+      }
+      if(readableAddedState['all'] &&
+        readableAddedState['all'].items) {
+        readableAddedState['all'].items[action.readable.id] = action.readable
+      }
+      return readableAddedState
+    case 'a':
+      let editedState = Object.assign({}, state)
+      editedState[action.comment.parentId].items[action.comment.id] = action.comment
+      return editedState
+    case FETCH_READABLE_EDIT_SUCCESS:
+      console.log('action', action)
+      console.log('state', state)
+      let readableEditedState = Object.assign({}, state)
+      if(readableEditedState[action.readable.category] &&
+        readableEditedState[action.readable.category].items) {
+        readableEditedState[action.readable.category].items[action.readable.id] = action.readable
+      }
+      if(readableEditedState['all'] &&
+        readableEditedState['all'].items) {
+        readableEditedState['all'].items[action.readable.id] = action.readable
+      }
+      return readableEditedState
+    case SELECT_CATEGORY:
+      const value = {
+        ...state,
+        [selectedCategory]: action.category
+      }
+      return value
     default:
       return state
   }

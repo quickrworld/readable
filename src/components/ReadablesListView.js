@@ -20,8 +20,6 @@ class ReadablesListView extends Component {
       this.props.selectCategory(nextProps.selectedCategory)
       this.props.fetchReadables(nextProps.selectedCategory)
     }
-    if(this.props.readables.order !== nextProps.readables.order) {
-    }
   }
   render() {
     const readables = this.props.readables.readables
