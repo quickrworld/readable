@@ -5,7 +5,7 @@ import {connect} from "react-redux"
 
 class UpvoteReadableView extends Component {
   upvote = () => {
-    this.props.upvoteReadable(this.props.readable.readable.id)
+    this.props.upvoteReadable(this.props.readable.id)
   }
   render() {
     const pointerStyle = {

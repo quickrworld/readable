@@ -18,31 +18,12 @@ class ReadableView extends Component {
   closeEditor = () => {
     this.setState({editorOpen: false})
   }
-  componentDidMount() {
-    const id = this.props.id
-    if(id) {
-      this.props.selectReadable(id)
-      this.props.fetchReadable(id)
-    }
-  }
   render() {
     const id=this.props.id
-    const author = (this.props.readableById &&
-      this.props.readableById[this.props.id] &&
-      this.props.readableById[this.props.id].readable &&
-      this.props.readableById[this.props.id].readable.author)
-    const title=(this.props.readableById &&
-      this.props.readableById[this.props.id] &&
-      this.props.readableById[this.props.id].readable &&
-      this.props.readableById[this.props.id].readable.title)
-    const story=(this.props.readableById &&
-      this.props.readableById[this.props.id] &&
-      this.props.readableById[this.props.id].readable &&
-      this.props.readableById[this.props.id].readable.body)
-    const category=(this.props.readableById &&
-      this.props.readableById[this.props.id] &&
-      this.props.readableById[this.props.id].readable &&
-      this.props.readableById[this.props.id].readable.category)
+    const author=this.props.readable.author
+    const title=this.props.readable.title
+    const story=this.props.readable.body
+    const category=this.props.readable.category
     const topLineStyle = {
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',
@@ -86,10 +67,7 @@ class ReadableView extends Component {
       <div>
         <div className="top-line" style={topLineStyle}>
           <div style={titleStyle}>
-            {this.props.readableById &&
-              this.props.readableById[this.props.id] &&
-              this.props.readableById[this.props.id].readable &&
-              this.props.readableById[this.props.id].readable.title}
+            {this.props.readable.title}
           </div>
           <div style={editIconStyle}>
             <span style={editLabelStyle}>
@@ -99,28 +77,16 @@ class ReadableView extends Component {
             </span>
           </div>
           <div style={headlineStyle}>
-            {this.props.readableById &&
-              this.props.readableById[this.props.id] &&
-              this.props.readableById[this.props.id].readable &&
-              this.props.readableById[this.props.id].readable.author} |
-              {this.props.readableById &&
-                this.props.readableById[this.props.id] &&
-                this.props.readableById[this.props.id].readable &&
-                this.props.readableById[this.props.id].readable.timestamp && new Date(
-                this.props.readableById[this.props.id].readable.timestamp).toDateString()} | <span style={{whiteSpace: 'nowrap'}}>
-              {this.props.readableById &&
-              this.props.readableById[this.props.id] &&
-              this.props.readableById[this.props.id].readable &&
-              this.props.readableById[this.props.id].readable.commentCount} Comments</span> |
+            {this.props.readable.author} |
+              {this.props.readable.timestamp && new Date(
+                this.props.readable.timestamp).toDateString()} | <span style={{whiteSpace: 'nowrap'}}>
+              {this.props.readable.commentCount} Comments</span> |
             <span style={voteStyle}><span>
-              {this.props.readableById &&
-              this.props.readableById[this.props.id] &&
-              this.props.readableById[this.props.id].readable &&
-              this.props.readableById[this.props.id].readable.voteScore} votes </span>
+              {this.props.readable.voteScore} votes </span>
               <span role={'img'} aria-label="Up vote">
-                <UpvoteReadableView readable={this.props.readableById[this.props.id]}/> </span>
+                <UpvoteReadableView readable={this.props.readable}/> </span>
               <span role={'img'} aria-label="Down vote">
-                <DownvoteReadableView readable={this.props.readableById[this.props.id]}/> </span>
+                <DownvoteReadableView readable={this.props.readable}/> </span>
             </span>
           </div>
           <div className="story" style={storyStyle}>
@@ -130,10 +96,7 @@ class ReadableView extends Component {
               to={{
                 pathname: `/posts/${this.props.id}`,
               }}>
-              {this.props.readableById &&
-                this.props.readableById[this.props.id] &&
-                this.props.readableById[this.props.id].readable &&
-                this.props.readableById[this.props.id].readable.body}
+              {this.props.readable.body}
             </NavLink>
           </div>
         </div>
@@ -155,7 +118,8 @@ class ReadableView extends Component {
 
 function mapStateToProps(state, ownProps) {
   const selectedReadable = ownProps.id
-  const { readable, readableById  } = state
+  const readable = ownProps.readable
+  const { readableById  } = state
   return { selectedReadable, readable, readableById }
 }
 

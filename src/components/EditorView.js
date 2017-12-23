@@ -4,6 +4,16 @@ import {fetchAddComment} from '../actions'
 import {fetchEditComment} from '../actions'
 
 class EditorView extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      id: props.id,
+      author: props.author,
+      category: props.category,
+      title: props.title,
+      story: props.story
+    }
+  }
   addComment = () => {
     if(!this.authorInput.value || !this.commentTextArea.value) {
       return
@@ -14,9 +24,6 @@ class EditorView extends Component {
       comment: this.commentTextArea.value
     })
     // TODO
-    // success => close
-    // failure => display message. Do not close. Provide a close button.
-    // animate close
     if (this.props.close) {
       this.props.close()
     }
@@ -36,6 +43,7 @@ class EditorView extends Component {
       this.props.close()
     }
   }
+
   render() {
     const editorStyle = {
       display: 'grid',
@@ -51,6 +59,13 @@ class EditorView extends Component {
           gridColumnStart: '1',
           gridColumnEnd: '3',
         }}><span style={{paddingRight: '4px'}}>Comment as </span>
+          <input
+            type="text"
+            onChange={this.handleAuthorChange}
+            name={'author'}
+            placeholder={'Author'}
+            value={this.state.author ? this.state.author : ''}
+          />
           <input
             ref={(input) => {this.authorInput = input}} type={'text'} name={'author'} placeholder={'Your name'}
             defaultValue={this.props.author ? this.props.author : ''}>

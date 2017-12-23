@@ -78,7 +78,6 @@ class ReadableEditorView extends Component {
       paddingBottom: '24px',
     }
     return (
-
       <div style={editorStyle}>
         <div style={{
           gridRow: '1',
@@ -135,7 +134,6 @@ class ReadableEditorView extends Component {
           <button onClick={this.props.id ? this.editReadable : this.addReadable} style={{align:'right'}}>Submit</button>
         </div>
       </div>
-
     )
   }
 }

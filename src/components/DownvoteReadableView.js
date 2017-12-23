@@ -5,7 +5,7 @@ import {connect} from "react-redux"
 
 class DownvoteReadableView extends Component {
   downvote = () => {
-    this.props.downvoteReadable(this.props.readable.readable.id)
+    this.props.downvoteReadable(this.props.readable.id)
   }
   render() {
     const pointerStyle = {cursor: 'pointer'}
