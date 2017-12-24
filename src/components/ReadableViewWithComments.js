@@ -113,21 +113,7 @@ class ReadableViewWithComments extends Component {
   }
 }
 
-// function mapStateToProps(state, ownProps) {
-//   const selectedReadable = ownProps.id
-//   const { readable, readableById  } = state
-//   if(readable && readable.category) {
-//     return { selectedReadable, readable, readableById, category: readable.category }
-//   }
-//   return { selectedReadable, readable, readableById }
-// }
-
 function mapStateToProps(state, ownProps) {
-  // const selectedReadable = ownProps.id
-  // const readable = ownProps.readable
-  // const { readableById  } = state
-  // return { selectedReadable, readable, readableById }
-
   const id = ownProps.id
   const {readableById} = state
   const title = readableById &&

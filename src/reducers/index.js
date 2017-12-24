@@ -210,9 +210,8 @@ function readableById(state = {
       }
       return readableAddedState
     case FETCH_READABLE_EDIT_SUCCESS:
-      console.log('called readableById')
       let readableEditedState = Object.assign({}, state)
-      readableEditedState[action.id] = {
+      readableEditedState[action.readable.id] = {
         isFetching: false,
         lastUpdated: action.readable.timestamp,
         readable: action.readable

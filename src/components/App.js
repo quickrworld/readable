@@ -127,9 +127,16 @@ class App extends Component {
   }
 }
 
+// function mapStateToProps(state) {
+//   if(state.readablesByCategory && state.readablesByCategory.selectedCategory) {
+//     return state.readablesByCategory.selectedCategory
+//   }
+//   return {}
+// }
+
 function mapStateToProps(state) {
   if(state.readablesByCategory && state.readablesByCategory.selectedCategory) {
-    return state.readablesByCategory.selectedCategory
+    return { selectedCategory: state.readablesByCategory.selectedCategory }
   }
   return {}
 }
