@@ -6,7 +6,7 @@ class CategoryListView extends Component {
   render() {
     return (
       <div>
-        <div><CategoryView category={{'name': 'All Categories', 'path':'all'}}/></div>
+        <div style={{paddingTop:'12px'}}><CategoryView category={{'name': 'All Categories', 'path':'all'}}/></div>
           {this.props.categories.categories.map((category) => (
             <div key={category.path} >
               <CategoryView

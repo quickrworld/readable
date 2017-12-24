@@ -27,7 +27,7 @@ class App extends Component {
       display: 'grid',
       width: '100%',
       height: '100vh',
-      gridTemplateColumns: '16rem 1fr',
+      gridTemplateColumns: '18rem 1fr',
     }
     const sidebarStyle = {
       fontFamily: 'Open Sans',
