@@ -6,7 +6,7 @@ import CommentsListView from './CommentsListView'
 import UpvoteReadableView from './UpvoteReadableView'
 import DownvoteReadableView from './DownvoteReadableView'
 import FaEdit from 'react-icons/lib/fa/edit'
-import EditorView from './EditorView'
+import CommentEditorView from './CommentEditorView'
 import ReadableEditorView from './ReadableEditorView'
 
 class ReadableViewWithComments extends Component {
@@ -105,7 +105,7 @@ class ReadableViewWithComments extends Component {
           </div>
         </div>
         <div style={{gridRow:'2', gridColumnStart:'1', gridColumnEnd:'3'}}>
-          <EditorView readable={this.props.id}/>
+          <CommentEditorView readable={this.props.id}/>
         </div>
         <CommentsListView selectedReadable={this.props.id}/>
       </div>

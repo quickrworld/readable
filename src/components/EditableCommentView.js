@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import UpvoteCommentView from './UpvoteCommentView'
 import DownvoteCommentView from './DownvoteCommentView'
 import FaEdit from 'react-icons/lib/fa/edit'
-import EditorView from './EditorView'
+import CommentEditorView from './CommentEditorView'
 class EditableCommentView extends Component {
   state = {
     editorOpen: false
@@ -82,7 +82,7 @@ class EditableCommentView extends Component {
           this.props.comment.body}
         </div>
         <div style={{display: this.state.editorOpen ? 'block' : 'none'}}>
-          <EditorView
+          <CommentEditorView
             id={this.props.comment.id}
             author={this.props.comment.author}
             story={this.props.comment.body}
