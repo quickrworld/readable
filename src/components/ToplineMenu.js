@@ -13,6 +13,15 @@ class ToplineMenu extends Component {
   closeEditor = () => {
     this.setState({editorOpen: false})
   }
+  sortNewest = () => {
+    this.props.sortNewest()
+  }
+  sortOldest = () => {
+    this.props.sortOldest()
+  }
+  sortTopvoted = () => {
+    this.props.sortTopvoted()
+  }
   render() {
     const topLineStyle = {
       display: 'grid',
@@ -35,9 +44,9 @@ class ToplineMenu extends Component {
     return (
       <div className="top-line" style={topLineStyle}>
         <div style={sortLineStyle}>
-          <span onClick={this.props.sortNewest} style={pointerStyle}>
-            Newest</span> | <span onClick={this.props.sortOldest} style={pointerStyle}>
-            Oldest</span> | <span onClick={this.props.sortTopvoted} style={pointerStyle}>
+          <span onClick={this.sortNewest} style={pointerStyle}>
+            Newest</span> | <span onClick={this.sortOldest} style={pointerStyle}>
+            Oldest</span> | <span onClick={this.sortTopvoted} style={pointerStyle}>
             Top voted</span>
           <hr/>
         </div>
