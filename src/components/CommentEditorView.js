@@ -27,6 +27,7 @@ class EditorView extends Component {
       author: this.state.author,
       comment: this.state.comment
     })
+    this.props.fetchReadable(this.props.readable)
     // TODO
     if (this.props.close) {
       this.props.close()

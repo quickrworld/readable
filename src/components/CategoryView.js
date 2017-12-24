@@ -19,7 +19,7 @@ class CategoryView extends Component {
     const navLinkActiveStyle = {
       color: 'rgb(255,255,255)',
       textDecoration: 'none',
-      pointerEvents: 'none'
+      // pointerEvents: 'none'
     }
     return (
       <div style={categoryStyle}>

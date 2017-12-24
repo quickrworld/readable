@@ -24,24 +24,9 @@ class ContentHeader extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  // if(state.readablesByCategory && state.readablesByCategory.selectedCategory) {
-  //   if(state.readablesByCategory.selectedCategory === 'all') {
-  //     return { 'category': 'All Categories' }
-  //   }
-  //   if(state.allCategories &&
-  //     state.allCategories.items &&
-  //     state.allCategories.items[state.readablesByCategory.selectedCategory]) {
-  //     return  { 'category': state.allCategories.items[state.readablesByCategory.selectedCategory].name }
-  //   }
-  // }
-
+  // change 'category: ...' to 'categoryName: ...' or 'title: ...'
   const { selectedCategory, allCategories } = state
-
   const category = ownProps.selectedCategory ? ownProps.selectedCategory : selectedCategory
-
-  if (allCategories.items[category] && allCategories.items[category]) {
-    return { 'category': allCategories.items[category].name }
-  }
   if (allCategories.items[category]) {
     return { 'category': allCategories.items[category].name }
   }
@@ -51,6 +36,5 @@ function mapStateToProps(state, ownProps) {
   return { 'category': '' }
 }
 
-//export default withRouter(connect(mapStateToProps)(ContentHeader))
 export default connect(mapStateToProps)(ContentHeader)
 

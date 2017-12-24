@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import EditableCommentView from './EditableCommentView'
+import CommentView from './CommentView'
 import CommentToplineMenu from './CommentToplineMenu'
 import {
   fetchComments,
@@ -28,7 +28,7 @@ class CommentsListView extends Component {
         <CommentToplineMenu/>
         <div>
           {comments.map((comment) => (
-            <EditableCommentView key={comment.id} comment={comment}/>
+            <CommentView key={comment.id} comment={comment}/>
           ))}
         </div>
       </div>

@@ -173,6 +173,8 @@ function readableById(state = {
   switch(action.type) {
     case FETCH_READABLE_SUCCESS:
     case FETCH_READABLE_REQUEST:
+      console.log('action', action)
+      console.log('state', state)
       if(action.id) {
         const value =  Object.assign({}, state, {
           [action.id]: readable(state[action.id], action)

@@ -2,7 +2,17 @@ import React, { Component } from 'react'
 import UpvoteCommentView from './UpvoteCommentView'
 import DownvoteCommentView from './DownvoteCommentView'
 import FaEdit from 'react-icons/lib/fa/edit'
+import CommentEditorView from './CommentEditorView'
 class CommentView extends Component {
+  state = {
+    editorOpen: false
+  }
+  openEditor = () => {
+    this.setState({editorOpen: true})
+  }
+  closeEditor = () => {
+    this.setState({editorOpen: false})
+  }
   render() {
     const topLineStyle = {
       display: 'grid',
@@ -70,6 +80,15 @@ class CommentView extends Component {
           {this.props.comment &&
           this.props.comment.body &&
           this.props.comment.body}
+        </div>
+        <div style={{display: this.state.editorOpen ? 'block' : 'none'}}>
+          <CommentEditorView
+            id={this.props.comment.id}
+            author={this.props.comment.author}
+            story={this.props.comment.body}
+            readable={this.props.comment.parentId}
+            close={this.closeEditor}
+          />
         </div>
       </div>
     )

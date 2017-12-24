@@ -105,7 +105,7 @@ class ReadableViewWithComments extends Component {
           </div>
         </div>
         <div style={{gridRow:'2', gridColumnStart:'1', gridColumnEnd:'3'}}>
-          <CommentEditorView readable={this.props.id}/>
+          <CommentEditorView readable={this.props.id} fetchReadable={this.props.fetchReadable}/>
         </div>
         <CommentsListView selectedReadable={this.props.id}/>
       </div>

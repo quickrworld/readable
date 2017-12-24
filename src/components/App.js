@@ -127,13 +127,6 @@ class App extends Component {
   }
 }
 
-// function mapStateToProps(state) {
-//   if(state.readablesByCategory && state.readablesByCategory.selectedCategory) {
-//     return state.readablesByCategory.selectedCategory
-//   }
-//   return {}
-// }
-
 function mapStateToProps(state) {
   if(state.readablesByCategory && state.readablesByCategory.selectedCategory) {
     return { selectedCategory: state.readablesByCategory.selectedCategory }
@@ -149,5 +142,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
 export default connect(mapStateToProps, mapDispatchToProps)(App)

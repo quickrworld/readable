@@ -32,5 +32,4 @@ function mapStateToProps(state) {
   return { categories, selectedCategory }
 }
 
-// export default withRouter(connect(mapStateToProps)(CategoryListView))
 export default connect(mapStateToProps)(CategoryListView)
