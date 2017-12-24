@@ -9,19 +9,23 @@ class EditorView extends Component {
     this.state = {
       id: props.id,
       author: props.author,
-      category: props.category,
-      title: props.title,
-      story: props.story
+      comment: props.story
     }
   }
+  handleAuthorChange = (event) => {
+    this.setState({author: event.target.value})
+  }
+  handleCommentChange = (event) => {
+    this.setState({comment: event.target.value})
+  }
   addComment = () => {
-    if(!this.authorInput.value || !this.commentTextArea.value) {
+    if(!this.state.author || !this.state.comment) {
       return
     }
     this.props.addComment({
       readable: this.props.readable,
-      author: this.authorInput.value,
-      comment: this.commentTextArea.value
+      author: this.state.author,
+      comment: this.state.comment
     })
     // TODO
     if (this.props.close) {
@@ -29,14 +33,14 @@ class EditorView extends Component {
     }
   }
   editComment = () => {
-    if(!this.authorInput.value || !this.commentTextArea.value) {
+    if(!this.state.author || !this.state.comment) {
       return
     }
     this.props.editComment({
       id: this.props.id,
       readable: this.props.readable,
-      author: this.authorInput.value,
-      comment: this.commentTextArea.value
+      author: this.state.author,
+      comment: this.state.comment
     })
     // test code
     if (this.props.close) {
@@ -66,10 +70,6 @@ class EditorView extends Component {
             placeholder={'Author'}
             value={this.state.author ? this.state.author : ''}
           />
-          <input
-            ref={(input) => {this.authorInput = input}} type={'text'} name={'author'} placeholder={'Your name'}
-            defaultValue={this.props.author ? this.props.author : ''}>
-          </input>
         </div>
         <div style={{
           gridRow: '2',
@@ -79,8 +79,8 @@ class EditorView extends Component {
           marginRight: '12px'
         }}>
           <textarea
-            ref={(textarea) => {this.commentTextArea = textarea}} rows={'5'} placeholder={'Your comment'}
-            defaultValue={this.props.story ? this.props.story : ''}
+            onChange={this.handleCommentChange} name={'story'} rows={'5'} placeholder={'Your story'}
+            value={this.state.comment ? this.state.comment : ''}
             style={{
               border: '1px solid lightgray',
               overflowY: 'auto',
@@ -88,7 +88,7 @@ class EditorView extends Component {
               outline: 'none',
               boxShadow: 'none',
               resize: 'none'
-          }}>
+            }}>
           </textarea>
         </div>
         <div style={{gridRow:'3', gridColumnStart:'4', justifySelf: 'end', paddingRight: '6px'}}>

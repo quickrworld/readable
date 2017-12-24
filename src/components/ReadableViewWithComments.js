@@ -50,14 +50,37 @@ class ReadableViewWithComments extends Component {
       borderBottom: '1px solid lightgray',
       color: 'rgb(79, 79, 79)'
     }
+    const title = this.props.readableById &&
+      this.props.readableById[this.props.id] &&
+      this.props.readableById[this.props.id].readable &&
+      this.props.readableById[this.props.id].readable.title
+    const author = this.props.readableById &&
+      this.props.readableById[this.props.id] &&
+      this.props.readableById[this.props.id].readable &&
+      this.props.readableById[this.props.id].readable.author
+    const date = this.props.readableById &&
+      this.props.readableById[this.props.id] &&
+      this.props.readableById[this.props.id].readable &&
+      this.props.readableById[this.props.id].readable.timestamp && new Date(
+      this.props.readableById[this.props.id].readable.timestamp).toDateString()
+    const commentCount = this.props.readableById &&
+      this.props.readableById[this.props.id] &&
+      this.props.readableById[this.props.id].readable &&
+      this.props.readableById[this.props.id].readable.commentCount
+    const voteScore = this.props.readableById &&
+      this.props.readableById[this.props.id] &&
+      this.props.readableById[this.props.id].readable &&
+      this.props.readableById[this.props.id].readable.voteScore
+    const body = this.props.readableById &&
+      this.props.readableById[this.props.id] &&
+      this.props.readableById[this.props.id].readable &&
+      this.props.readableById[this.props.id].readable.body
+    const readable = this.props.readableById[this.props.id]
     return (
       <div>
         <div className="top-line" style={topLineStyle}>
           <div style={titleStyle}>
-            {this.props.readableById &&
-            this.props.readableById[this.props.id] &&
-            this.props.readableById[this.props.id].readable &&
-            this.props.readableById[this.props.id].readable.title}
+            {title}
           </div>
           <div style={{
             gridColumnStart: '2',
@@ -68,37 +91,18 @@ class ReadableViewWithComments extends Component {
               <button><FaEdit/></button></span> ︎</span>
           </div>
           <div style={headlineStyle}>
-            {this.props.readableById &&
-            this.props.readableById[this.props.id] &&
-            this.props.readableById[this.props.id].readable &&
-            this.props.readableById[this.props.id].readable.author} |
-            {this.props.readableById &&
-            this.props.readableById[this.props.id] &&
-            this.props.readableById[this.props.id].readable &&
-            this.props.readableById[this.props.id].readable.timestamp && new Date(
-              this.props.readableById[this.props.id].readable.timestamp).toDateString()} | <span style={{whiteSpace: 'nowrap'}}>
-              {this.props.readableById &&
-              this.props.readableById[this.props.id] &&
-              this.props.readableById[this.props.id].readable &&
-              this.props.readableById[this.props.id].readable.commentCount} Comments</span> |
-            <span style={voteStyle}><span>
-              {this.props.readableById &&
-              this.props.readableById[this.props.id] &&
-              this.props.readableById[this.props.id].readable &&
-              this.props.readableById[this.props.id].readable.voteScore} votes </span>
+            {author} |
+            {date} | <span style={{whiteSpace: 'nowrap'}}>{commentCount} Comments</span> |
+            <span style={voteStyle}><span>{voteScore} votes </span>
               <span role={'img'} aria-label="Up vote">
-                <UpvoteReadableView readable={this.props.readableById[this.props.id]}/>
+                <UpvoteReadableView readable={readable}/>
               </span> <span role={'img'} aria-label="Down vote">
-                <DownvoteReadableView readable={this.props.readableById[this.props.id]}/>
+                <DownvoteReadableView readable={readable}/>
               </span>
             </span>
           </div>
-          <div className="story"
-               style={storyStyle}>
-            {this.props.readableById &&
-            this.props.readableById[this.props.id] &&
-            this.props.readableById[this.props.id].readable &&
-            this.props.readableById[this.props.id].readable.body}
+          <div className="story" style={storyStyle}>
+            {body}
           </div>
         </div>
         <div style={{gridRow:'2', gridColumnStart:'1', gridColumnEnd:'3'}}>
