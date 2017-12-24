@@ -148,6 +148,19 @@ function readable(state = {
     case FETCH_READABLE_DOWNVOTE_SUCCESS:
       let downvotedState = Object.assign({}, state)
       return downvotedState[action.id] = action.readable
+    case FETCH_READABLE_EDIT_SUCCESS:
+      console.log('called readable')
+      let readableEditedState = Object.assign({}, state)
+      readableEditedState.readable = Object.assign({}, action.readable)
+      // if(readableEditedState[action.readable.category] &&
+      //   readableEditedState[action.readable.category].items) {
+      //   readableEditedState[action.readable.category].items[action.readable.id] = action.readable
+      // }
+      // if(readableEditedState['all'] &&
+      //   readableEditedState['all'].items) {
+      //   readableEditedState['all'].items[action.readable.id] = action.readable
+      // }
+      return readableEditedState
     default:
       return state
   }
@@ -197,6 +210,7 @@ function readableById(state = {
       }
       return readableAddedState
     case FETCH_READABLE_EDIT_SUCCESS:
+      console.log('called readableById')
       let readableEditedState = Object.assign({}, state)
       readableEditedState[action.id] = {
         isFetching: false,
@@ -268,8 +282,7 @@ function readablesByCategory(state = {
       editedState[action.comment.parentId].items[action.comment.id] = action.comment
       return editedState
     case FETCH_READABLE_EDIT_SUCCESS:
-      console.log('action', action)
-      console.log('state', state)
+      console.log('called readableByCategory')
       let readableEditedState = Object.assign({}, state)
       if(readableEditedState[action.readable.category] &&
         readableEditedState[action.readable.category].items) {
@@ -367,7 +380,7 @@ function commentsByReadable(state = {}, action) {
 const reducer = combineReducers({
   allCategories,
   readablesByCategory,
-
+  readable,
   readableById,
   commentsByReadable,
   selectedCategory,

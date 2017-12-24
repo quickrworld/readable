@@ -7,6 +7,7 @@ import UpvoteReadableView from './UpvoteReadableView'
 import DownvoteReadableView from './DownvoteReadableView'
 import FaEdit from 'react-icons/lib/fa/edit'
 import EditorView from './EditorView'
+import ReadableEditorView from './ReadableEditorView'
 
 class ReadableViewWithComments extends Component {
   componentDidMount() {
@@ -15,6 +16,15 @@ class ReadableViewWithComments extends Component {
       this.props.selectReadable(id)
       this.props.fetchReadable(id)
     }
+  }
+  state = {
+    editorOpen: false
+  }
+  openEditor = () => {
+    this.setState({editorOpen: true})
+  }
+  closeEditor = () => {
+    this.setState({editorOpen: false})
   }
   render() {
     const topLineStyle = {
@@ -50,59 +60,48 @@ class ReadableViewWithComments extends Component {
       borderBottom: '1px solid lightgray',
       color: 'rgb(79, 79, 79)'
     }
-    const title = this.props.readableById &&
-      this.props.readableById[this.props.id] &&
-      this.props.readableById[this.props.id].readable &&
-      this.props.readableById[this.props.id].readable.title
-    const author = this.props.readableById &&
-      this.props.readableById[this.props.id] &&
-      this.props.readableById[this.props.id].readable &&
-      this.props.readableById[this.props.id].readable.author
-    const date = this.props.readableById &&
-      this.props.readableById[this.props.id] &&
-      this.props.readableById[this.props.id].readable &&
-      this.props.readableById[this.props.id].readable.timestamp && new Date(
-      this.props.readableById[this.props.id].readable.timestamp).toDateString()
-    const commentCount = this.props.readableById &&
-      this.props.readableById[this.props.id] &&
-      this.props.readableById[this.props.id].readable &&
-      this.props.readableById[this.props.id].readable.commentCount
-    const voteScore = this.props.readableById &&
-      this.props.readableById[this.props.id] &&
-      this.props.readableById[this.props.id].readable &&
-      this.props.readableById[this.props.id].readable.voteScore
-    const body = this.props.readableById &&
-      this.props.readableById[this.props.id] &&
-      this.props.readableById[this.props.id].readable &&
-      this.props.readableById[this.props.id].readable.body
-    const readable = this.props.readableById[this.props.id]
     return (
       <div>
         <div className="top-line" style={topLineStyle}>
           <div style={titleStyle}>
-            {title}
+            {this.props.title}
           </div>
           <div style={{
             gridColumnStart: '2',
             gridColumnEnd: '3',
             textAlign: 'right',
             alignContent: 'center'}}>
-            <span style={editIconStyle}><span role={'img'} aria-label="">
-              <button><FaEdit/></button></span> ︎</span>
+            <span style={editIconStyle}>
+              <button onClick={() => this.openEditor()} style={{borderWidth: '0px'}}>
+                <FaEdit/>
+              </button>
+            </span>
           </div>
           <div style={headlineStyle}>
-            {author} |
-            {date} | <span style={{whiteSpace: 'nowrap'}}>{commentCount} Comments</span> |
-            <span style={voteStyle}><span>{voteScore} votes </span>
+            {this.props.author} |
+            {new Date(this.props.timestamp).toDateString()} | <span style={{whiteSpace: 'nowrap'}}>{this.props.commentCount} Comments</span> |
+            <span style={voteStyle}><span>{this.props.voteScore} votes </span>
               <span role={'img'} aria-label="Up vote">
-                <UpvoteReadableView readable={readable}/>
+                <UpvoteReadableView readable={this.props.readable}/>
               </span> <span role={'img'} aria-label="Down vote">
-                <DownvoteReadableView readable={readable}/>
+                <DownvoteReadableView readable={this.props.readable}/>
               </span>
             </span>
           </div>
           <div className="story" style={storyStyle}>
-            {body}
+            {this.props.body}
+          </div>
+          <div style={{
+            display: this.state.editorOpen ? 'block' : 'none',
+            gridColumnStart:'1', gridColumnEnd: '5', borderBottom: '1px solid lightgray', marginBottom: '12px'}}>
+            <ReadableEditorView
+              id={this.props.id}
+              author={this.props.author}
+              category={this.props.category}
+              title={this.props.title}
+              story={this.props.body}
+              readable={this.props.readable}
+              close={this.closeEditor}/>
           </div>
         </div>
         <div style={{gridRow:'2', gridColumnStart:'1', gridColumnEnd:'3'}}>
@@ -114,13 +113,55 @@ class ReadableViewWithComments extends Component {
   }
 }
 
+// function mapStateToProps(state, ownProps) {
+//   const selectedReadable = ownProps.id
+//   const { readable, readableById  } = state
+//   if(readable && readable.category) {
+//     return { selectedReadable, readable, readableById, category: readable.category }
+//   }
+//   return { selectedReadable, readable, readableById }
+// }
+
 function mapStateToProps(state, ownProps) {
-  const selectedReadable = ownProps.id
-  const { readable, readableById  } = state
-  if(readable && readable.category) {
-    return { selectedReadable, readable, readableById, category: readable.category }
-  }
-  return { selectedReadable, readable, readableById }
+  // const selectedReadable = ownProps.id
+  // const readable = ownProps.readable
+  // const { readableById  } = state
+  // return { selectedReadable, readable, readableById }
+
+  const id = ownProps.id
+  const {readableById} = state
+  const title = readableById &&
+    readableById[id] &&
+    readableById[id].readable &&
+    readableById[id].readable.title
+  const author = readableById &&
+    readableById[id] &&
+    readableById[id].readable &&
+    readableById[id].readable.author
+  const category = readableById &&
+    readableById[id] &&
+    readableById[id].readable &&
+    readableById[id].readable.category
+  const timestamp = readableById &&
+    readableById[id] &&
+    readableById[id].readable &&
+    readableById[id].readable.timestamp && new Date(
+      readableById[id].readable.timestamp).toDateString()
+  const commentCount = readableById &&
+    readableById[id] &&
+    readableById[id].readable &&
+    readableById[id].readable.commentCount
+  const voteScore = readableById &&
+    readableById[id] &&
+    readableById[id].readable &&
+    readableById[id].readable.voteScore
+  const body = readableById &&
+    readableById[id] &&
+    readableById[id].readable &&
+    readableById[id].readable.body
+  const readable = readableById[id] && readableById[id].readable
+
+  return { id, title, author, category, body, voteScore, commentCount, timestamp, readable, readableById }
 }
 
 function mapDispatchToProps(dispatch) {
