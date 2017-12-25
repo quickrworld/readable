@@ -224,8 +224,8 @@ function readablesByCategory(state = {
         let value = Object.assign({}, state, {
           [action.category]: readables(state[action.category], action),
         })
-        if (!state.selectedCategory) {
-          value.selectedCategory = action.category
+        if (!state.myCategory) {
+          value.myCategory = action.category
         }
         return value
       }
@@ -244,16 +244,16 @@ function readablesByCategory(state = {
       })
     case FETCH_READABLE_UPVOTE_SUCCESS:
       let upvotedState = Object.assign({}, state)
-      if(upvotedState[state.selectedCategory] &&
-        upvotedState[state.selectedCategory].items) {
-        upvotedState[state.selectedCategory].items[action.readable.id] = action.readable
+      if(upvotedState[state.myCategory] &&
+        upvotedState[state.myCategory].items) {
+        upvotedState[state.myCategory].items[action.readable.id] = action.readable
       }
       return upvotedState
     case FETCH_READABLE_DOWNVOTE_SUCCESS:
       let downvotedState = Object.assign({}, state)
-      if(downvotedState[state.selectedCategory] &&
-        downvotedState[state.selectedCategory].items) {
-        downvotedState[state.selectedCategory].items[action.readable.id] = action.readable
+      if(downvotedState[state.myCategory] &&
+        downvotedState[state.myCategory].items) {
+        downvotedState[state.myCategory].items[action.readable.id] = action.readable
       }
       return downvotedState
     case FETCH_READABLE_ADD_SUCCESS:
@@ -285,7 +285,7 @@ function readablesByCategory(state = {
     case SELECT_CATEGORY:
       const value = {
         ...state,
-        [selectedCategory]: action.category
+        'myCategory': action.category
       }
       return value
     default:

@@ -15,9 +15,9 @@ import ReadableViewWithComments from "./ReadableViewWithComments"
 class App extends Component {
   componentDidMount() {
     this.props.fetchCategories()
-    if(this.props.selectedCategory) {
-      this.props.selectCategory(this.props.selectedCategory)
-      this.props.fetchReadables(this.props.selectedCategory)
+    if(this.props.myCategory) {
+      this.props.selectCategory(this.props.myCategory)
+      this.props.fetchReadables(this.props.myCategory)
     }
   }
   render() {
@@ -98,7 +98,7 @@ class App extends Component {
           </div>
         </div>
         <div style={contentStyle}>
-          <ContentHeader selectedCategory={this.props.category}/>
+          <ContentHeader myCategory={this.props.category}/>
           <div className="content-main" style={contentMainStyle}>
             <div className="main-content" style={mainContentStyle}>
               <div>
@@ -128,8 +128,8 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  if(state.readablesByCategory && state.readablesByCategory.selectedCategory) {
-    return { selectedCategory: state.readablesByCategory.selectedCategory }
+  if(state.readablesByCategory && state.readablesByCategory.myCategory) {
+    return { myCategory: state.readablesByCategory.myCategory }
   }
   return {}
 }

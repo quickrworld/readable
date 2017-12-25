@@ -24,9 +24,8 @@ class ContentHeader extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  // change 'category: ...' to 'categoryName: ...' or 'title: ...'
   const { selectedCategory, allCategories } = state
-  const category = ownProps.selectedCategory ? ownProps.selectedCategory : selectedCategory
+  const category = ownProps.myCategory ? ownProps.myCategory : selectedCategory
   if (allCategories.items[category]) {
     return { 'category': allCategories.items[category].name }
   }

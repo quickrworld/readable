@@ -15,10 +15,10 @@ class ReadablesListView extends Component {
     this.props.fetchReadables(this.props.category)
   }
   componentWillReceiveProps(nextProps) {
-    if(this.props.selectedCategory !== nextProps.selectedCategory) {
+    if(this.props.myCategory !== nextProps.myCategory) {
       //this.props.selectCategory(nextProps.category)
-      this.props.selectCategory(nextProps.selectedCategory)
-      this.props.fetchReadables(nextProps.selectedCategory)
+      this.props.selectCategory(nextProps.myCategory)
+      this.props.fetchReadables(nextProps.myCategory)
     }
   }
   render() {
@@ -37,11 +37,11 @@ class ReadablesListView extends Component {
 
 function mapStateToProps(state, ownProps) {
   const { readablesByCategory } = state
-  const selectedCategory = ownProps.category
+  const myCategory = ownProps.category
   const orderedReadables = readablesByCategory.order
-    ? (readablesByCategory[selectedCategory]
-      ? Object.keys(readablesByCategory[selectedCategory].items).reduce((readables, readable) => {
-          readables.push(readablesByCategory[selectedCategory].items[readable])
+    ? (readablesByCategory[myCategory]
+      ? Object.keys(readablesByCategory[myCategory].items).reduce((readables, readable) => {
+          readables.push(readablesByCategory[myCategory].items[readable])
           return readables
         }, [])
         : []).sort((r1, r2) => {
@@ -56,21 +56,21 @@ function mapStateToProps(state, ownProps) {
         }
         return r1.timestamp > r2.timestamp ? 1: -1
       })
-    : (readablesByCategory[selectedCategory]
-      ? Object.keys(readablesByCategory[selectedCategory].items).reduce((readables, readable) => {
-        readables.push(readablesByCategory[selectedCategory].items[readable])
+    : (readablesByCategory[myCategory]
+      ? Object.keys(readablesByCategory[myCategory].items).reduce((readables, readable) => {
+        readables.push(readablesByCategory[myCategory].items[readable])
         return readables
       }, [])
       : [])
 
   const readables = {
-    isFetching: readablesByCategory[selectedCategory] && readablesByCategory[selectedCategory].isFetching,
-    lastUpdated: readablesByCategory[selectedCategory] && readablesByCategory[selectedCategory].lastUpdated,
+    isFetching: readablesByCategory[myCategory] && readablesByCategory[myCategory].isFetching,
+    lastUpdated: readablesByCategory[myCategory] && readablesByCategory[myCategory].lastUpdated,
     readables: orderedReadables,
     order: readablesByCategory.order ? readablesByCategory.order : SORT_READABLES_NEWEST // remove this?
   }
 
-  return { readables, selectedCategory }
+  return { readables, myCategory }
 }
 
 function mapDispatchToProps(dispatch) {

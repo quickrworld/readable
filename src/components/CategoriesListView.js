@@ -11,7 +11,7 @@ class CategoryListView extends Component {
             <div key={category.path} >
               <CategoryView
                 category={category}
-                active={category.path === this.props.selectedCategory}/>
+                active={category.path === this.props.myCategory}/>
             </div>
           ))}
       </div>
@@ -20,7 +20,7 @@ class CategoryListView extends Component {
 }
 
 function mapStateToProps(state) {
-  const { allCategories, selectedCategory } = state
+  const { allCategories, myCategory } = state
   const categories = {
     isFetching: allCategories.isFetching,
     lastUpdated: allCategories.lastUpdated,
@@ -29,7 +29,7 @@ function mapStateToProps(state) {
       return categories
     }, [])
   }
-  return { categories, selectedCategory }
+  return { categories, myCategory }
 }
 
 export default connect(mapStateToProps)(CategoryListView)

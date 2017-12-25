@@ -95,9 +95,9 @@ class ReadableView extends Component {
               {this.props.readable.commentCount} Comments</span> |
             <span style={voteStyle}><span>
               {this.props.readable.voteScore} votes </span>
-              <span role={'img'} aria-label="Up vote">
+              <span aria-label="Up vote">
                 <UpvoteReadableView readable={this.props.readable}/> </span>
-              <span role={'img'} aria-label="Down vote">
+              <span aria-label="Down vote">
                 <DownvoteReadableView readable={this.props.readable}/> </span>
             </span>
           </div>

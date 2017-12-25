@@ -15,7 +15,10 @@ class ReadableEditorView extends Component {
     })
   }
   addReadable = () => {
-    if(!this.state.author || !this.state.story) {
+    if(!this.state.author ||
+       !this.state.story ||
+       !this.state.category ||
+       this.state.category === 'all') {
       return
     }
     this.props.addReadable({
@@ -103,6 +106,7 @@ class ReadableEditorView extends Component {
                     disabled={!!this.state.id}
                     style={{}}
                     value={this.state.category}>
+              <option key={'none'} value={''}>None</option>
               {this.state.categories.map((category) => {
                 return <option key={category.path} value={category.path}>{category.name}</option>
               })}
@@ -137,8 +141,9 @@ class ReadableEditorView extends Component {
           </textarea>
         </div>
         <div style={{gridRow:'4', gridColumnStart:'4', justifySelf: 'end', paddingRight: '6px'}}>
-          <button onClick={this.props.close} style={{align:'right'}}>Close</button>
-          <button onClick={this.props.id ? this.editReadable : this.addReadable} style={{align:'right'}}>Submit</button>
+          <button onClick={this.props.close} style={{align:'right'}} >Close</button>
+          <button onClick={this.props.id ? this.editReadable : this.addReadable}
+                  style={{align:'right'}}>Submit</button>
         </div>
       </div>
     )

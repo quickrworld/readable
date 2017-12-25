@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {fetchAddComment} from '../actions'
 import {fetchEditComment} from '../actions'
 
-class EditorView extends Component {
+class CommentEditorView extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -38,6 +38,7 @@ class EditorView extends Component {
       comment: this.state.comment
     })
     this.props.fetchReadable(this.props.readable)
+    this.setState({author: '', comment: ''})
     // TODO
     if (this.props.close) {
       this.props.close()
@@ -107,7 +108,8 @@ class EditorView extends Component {
             onMouseEnter={this.handleMouseEnter}
             onMouseLeave={this.handleMouseLeave}
             onClick={this.props.close}
-            style={{align:'right', borderWidth: '0px'}}>Close</button>
+            style={{display: !this.props.id ? 'none':'default',
+              align:'right', borderWidth: '0px'}}>Close</button>
           <button
             onMouseEnter={this.handleMouseEnter}
             onMouseLeave={this.handleMouseLeave}
@@ -126,4 +128,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(null, mapDispatchToProps)(EditorView)
+export default connect(null, mapDispatchToProps)(CommentEditorView)

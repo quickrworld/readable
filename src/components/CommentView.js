@@ -94,7 +94,7 @@ class CommentView extends Component {
           this.props.comment.body &&
           this.props.comment.body}
         </div>
-        <div style={{display: this.state.editorOpen ? 'block' : 'none'}}>
+        <div style={{marginBottom: '12px', borderBottom: '1px solid lightgray', display: this.state.editorOpen ? 'block' : 'none'}}>
           <CommentEditorView
             id={this.props.comment.id}
             author={this.props.comment.author}
