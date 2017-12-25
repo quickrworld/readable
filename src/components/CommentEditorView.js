@@ -12,6 +12,16 @@ class EditorView extends Component {
       comment: props.story
     }
   }
+  handleMouseEnter = (event) => {
+    event.target.style.backgroundColor = 'rgba(47,61,72,.8)'
+    event.target.style.color = 'rgba(255,255,255,.8)'
+    event.target.style.borderRadius = '4px'
+  }
+  handleMouseLeave = (event) => {
+    event.target.style.backgroundColor = 'rgb(255,255,255)'
+    event.target.style.color = 'rgb(0,0,0)'
+    event.target.style.borderRadius = '4px'
+  }
   handleAuthorChange = (event) => {
     this.setState({author: event.target.value})
   }
@@ -93,7 +103,11 @@ class EditorView extends Component {
           </textarea>
         </div>
         <div style={{gridRow:'3', gridColumnStart:'4', justifySelf: 'end', paddingRight: '6px'}}>
-          <button onClick={this.props.id ? this.editComment : this.addComment} style={{align:'right'}}>Comment</button>
+          <button
+            onMouseEnter={this.handleMouseEnter}
+            onMouseLeave={this.handleMouseLeave}
+            onClick={this.props.id ? this.editComment : this.addComment}
+            style={{align:'right', borderWidth: '0px'}}>Comment</button>
         </div>
       </div>
     )

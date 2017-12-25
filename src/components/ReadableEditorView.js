@@ -138,6 +138,11 @@ class ReadableEditorView extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  const { allCategories } = state
+  return { allCategories }
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     addReadable: (data) => dispatch(fetchAddReadable(data)),
@@ -145,4 +150,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(null, mapDispatchToProps)(ReadableEditorView)
+export default connect(mapStateToProps, mapDispatchToProps)(ReadableEditorView)

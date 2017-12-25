@@ -5,7 +5,6 @@ import {connect} from "react-redux"
 import CommentsListView from './CommentsListView'
 import UpvoteReadableView from './UpvoteReadableView'
 import DownvoteReadableView from './DownvoteReadableView'
-import FaEdit from 'react-icons/lib/fa/edit'
 import CommentEditorView from './CommentEditorView'
 import ReadableEditorView from './ReadableEditorView'
 
@@ -26,6 +25,16 @@ class ReadableViewWithComments extends Component {
   closeEditor = () => {
     this.setState({editorOpen: false})
   }
+  handleMouseEnter = (event) => {
+    event.target.style.backgroundColor = 'rgba(47,61,72,.8)'
+    event.target.style.color = 'rgba(255,255,255,.8)'
+    event.target.style.borderRadius = '4px'
+  }
+  handleMouseLeave = (event) => {
+    event.target.style.backgroundColor = 'rgb(255,255,255)'
+    event.target.style.color = 'rgb(0,0,0)'
+    event.target.style.borderRadius = '4px'
+  }
   render() {
     const topLineStyle = {
       display: 'grid',
@@ -41,7 +50,8 @@ class ReadableViewWithComments extends Component {
     }
     const editIconStyle = {
       fontSize: '12pt',
-      color: 'rgb(79, 79, 79)'
+      color: 'rgb(79, 79, 79)',
+      borderWidth: '0px'
     }
     const voteStyle = {
       whiteSpace: 'nowrap',
@@ -72,8 +82,12 @@ class ReadableViewWithComments extends Component {
             textAlign: 'right',
             alignContent: 'center'}}>
             <span style={editIconStyle}>
-              <button onClick={() => this.openEditor()} style={{borderWidth: '0px'}}>
-                <FaEdit/>
+              <button
+                onMouseEnter={this.handleMouseEnter}
+                onMouseLeave={this.handleMouseLeave}
+                onClick={() => this.openEditor()}
+                style={{borderWidth: '0px'}}>
+                Edit Readable
               </button>
             </span>
           </div>

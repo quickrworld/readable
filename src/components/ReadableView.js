@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {selectReadable, fetchReadable} from '../actions'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
-import FaEdit from 'react-icons/lib/fa/edit'
 import UpvoteReadableView from './UpvoteReadableView'
 import DownvoteReadableView from './DownvoteReadableView'
 import { NavLink } from 'react-router-dom'
@@ -17,6 +16,16 @@ class ReadableView extends Component {
   }
   closeEditor = () => {
     this.setState({editorOpen: false})
+  }
+  handleMouseEnter = (event) => {
+    event.target.style.backgroundColor = 'rgba(47,61,72,.8)'
+    event.target.style.color = 'rgba(255,255,255,.8)'
+    event.target.style.borderRadius = '4px'
+  }
+  handleMouseLeave = (event) => {
+    event.target.style.backgroundColor = 'rgb(255,255,255)'
+    event.target.style.color = 'rgb(0,0,0)'
+    event.target.style.borderRadius = '4px'
   }
   render() {
     const id=this.props.id
@@ -71,8 +80,11 @@ class ReadableView extends Component {
           </div>
           <div style={editIconStyle}>
             <span style={editLabelStyle}>
-              <button onClick={() => this.openEditor()} style={{borderWidth: '0px'}}>
-                <FaEdit/>
+              <button
+                onMouseEnter={this.handleMouseEnter}
+                onMouseLeave={this.handleMouseLeave}
+                onClick={() => this.openEditor()} style={{borderWidth: '0px'}}>
+                Edit
               </button>
             </span>
           </div>

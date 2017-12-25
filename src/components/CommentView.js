@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import UpvoteCommentView from './UpvoteCommentView'
 import DownvoteCommentView from './DownvoteCommentView'
-import FaEdit from 'react-icons/lib/fa/edit'
 import CommentEditorView from './CommentEditorView'
 class CommentView extends Component {
   state = {
@@ -12,6 +11,16 @@ class CommentView extends Component {
   }
   closeEditor = () => {
     this.setState({editorOpen: false})
+  }
+  handleMouseEnter = (event) => {
+    event.target.style.backgroundColor = 'rgba(47,61,72,.8)'
+    event.target.style.color = 'rgba(255,255,255,.8)'
+    event.target.style.borderRadius = '4px'
+  }
+  handleMouseLeave = (event) => {
+    event.target.style.backgroundColor = 'rgb(255,255,255)'
+    event.target.style.color = 'rgb(0,0,0)'
+    event.target.style.borderRadius = '4px'
   }
   render() {
     const topLineStyle = {
@@ -69,8 +78,12 @@ class CommentView extends Component {
           <div style={editButtonStyle}>
             <span style={editIconStyle}>
               <span role={'img'} aria-label="Edit comment">
-                <button onClick={() => this.openEditor()}>
-                  <FaEdit/>
+                <button
+                  onMouseEnter={this.handleMouseEnter}
+                  onMouseLeave={this.handleMouseLeave}
+                  style={{borderWidth: '0px'}}
+                  onClick={() => this.openEditor()}>
+                  Edit
                 </button>
               </span>
             ︎</span>
