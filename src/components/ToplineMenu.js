@@ -81,12 +81,18 @@ class ToplineMenu extends Component {
         </div>
         <div style={{display: this.state.editorOpen ? 'block' : 'none', gridColumnStart:'1', gridColumnEnd: '5'}}>
           <ReadableEditorView
+            category={this.props.category}
             close={this.closeEditor}
           />
         </div>
       </div>
     )
   }
+}
+
+function mapStateToProps(state) {
+  const {selectedCategory} = state
+  return { category: selectedCategory }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -97,4 +103,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(null, mapDispatchToProps)(ToplineMenu)
+export default connect(mapStateToProps, mapDispatchToProps)(ToplineMenu)

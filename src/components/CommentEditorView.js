@@ -106,6 +106,11 @@ class EditorView extends Component {
           <button
             onMouseEnter={this.handleMouseEnter}
             onMouseLeave={this.handleMouseLeave}
+            onClick={this.props.close}
+            style={{align:'right', borderWidth: '0px'}}>Close</button>
+          <button
+            onMouseEnter={this.handleMouseEnter}
+            onMouseLeave={this.handleMouseLeave}
             onClick={this.props.id ? this.editComment : this.addComment}
             style={{align:'right', borderWidth: '0px'}}>Comment</button>
         </div>

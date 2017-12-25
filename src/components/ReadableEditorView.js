@@ -10,7 +10,8 @@ class ReadableEditorView extends Component {
       author: nextProps.author,
       category: nextProps.category,
       title: nextProps.title,
-      story: nextProps.story
+      story: nextProps.story,
+      categories: nextProps.categories,
     })
   }
   addReadable = () => {
@@ -54,13 +55,17 @@ class ReadableEditorView extends Component {
       author: props.author,
       category: props.category,
       title: props.title,
-      story: props.story
+      story: props.story,
+      categories: props.categories
     }
   }
   handleAuthorChange = (event) => {
     this.setState({author: event.target.value});
   }
   handleCategoryChange = (event) => {
+    if(this.state.id) {
+      return
+    }
     this.setState({category: event.target.value});
   }
   handleTitleChange = (event) => {
@@ -93,13 +98,15 @@ class ReadableEditorView extends Component {
             value={this.state.author ? this.state.author : ''}
           />
           <span style={{paddingLeft: '12px', paddingRight: '4px'}}>Category </span>
-          <input
-            type="text"
-            onChange={this.handleCategoryChange}
-            name={'category'}
-            placeholder={'Category'}
-            value={this.state.category ? this.state.category : ''}
-          />
+            <select name='categorySelector'
+                    onChange={this.handleCategoryChange}
+                    disabled={!!this.state.id}
+                    style={{}}
+                    value={this.state.category}>
+              {this.state.categories.map((category) => {
+                return <option key={category.path} value={category.path}>{category.name}</option>
+              })}
+            </select>
           <span style={{paddingLeft: '12px', paddingRight: '4px'}}>Title </span>
           <input
             type="text"
@@ -140,7 +147,16 @@ class ReadableEditorView extends Component {
 
 function mapStateToProps(state) {
   const { allCategories } = state
-  return { allCategories }
+  if(allCategories && allCategories.items) {
+    const keys = Object.keys(allCategories.items)
+    const categories = keys.reduce((categories, category) => {
+      // remember push returns count of items pushed. Or use concat?
+      categories.push(allCategories.items[category])
+      return categories
+    }, [])
+    return { categories: categories }
+  }
+  return { categories: [] }
 }
 
 function mapDispatchToProps(dispatch) {

@@ -103,7 +103,7 @@ class ReadableView extends Component {
           </div>
           <div className="story" style={storyStyle}>
             <NavLink
-              style={{textDecoration: 'none'}}
+              style={{textDecoration: 'none', color: 'rgba(47,61,72,1)'}}
               activeStyle={{textDecoration: 'none'}}
               to={{
                 pathname: `/posts/${this.props.id}`,
