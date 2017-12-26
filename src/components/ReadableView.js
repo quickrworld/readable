@@ -69,7 +69,7 @@ class ReadableView extends Component {
     }
     const headlineStyle = {
       gridColumnStart: '1',
-      gridColumnEnd: '2',
+      gridColumnEnd: '3',
       color: 'rgb(79, 79, 79)'
     }
     return (

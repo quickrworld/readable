@@ -59,7 +59,7 @@ class ReadableViewWithComments extends Component {
     }
     const headlineStyle = {
       gridColumnStart: '1',
-      gridColumnEnd: '2',
+      gridColumnEnd: '3',
       color: 'rgb(79, 79, 79)'
     }
     const storyStyle = {
@@ -95,9 +95,9 @@ class ReadableViewWithComments extends Component {
             {this.props.author} |
             {new Date(this.props.timestamp).toDateString()} | <span style={{whiteSpace: 'nowrap'}}>{this.props.commentCount} Comments</span> |
             <span style={voteStyle}><span>{this.props.voteScore} votes </span>
-              <span role={'img'} aria-label="Up vote">
+              <span aria-label="Up vote">
                 <UpvoteReadableView readable={this.props.readable}/>
-              </span> <span role={'img'} aria-label="Down vote">
+              </span> <span aria-label="Down vote">
                 <DownvoteReadableView readable={this.props.readable}/>
               </span>
             </span>
