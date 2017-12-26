@@ -6,14 +6,16 @@ class CategoryListView extends Component {
   render() {
     return (
       <div>
-        <div style={{paddingTop:'12px'}}><CategoryView category={{'name': 'All Categories', 'path':'all'}}/></div>
-          {this.props.categories.categories.map((category) => (
-            <div key={category.path} >
-              <CategoryView
-                category={category}
-                active={category.path === this.props.myCategory}/>
-            </div>
-          ))}
+        <div style={{paddingTop:'12px'}}>
+          <CategoryView category={{'name': 'All Categories', 'path':'all'}}/>
+        </div>
+        {this.props.categories.categories.map((category) => (
+          <div key={category.path} >
+            <CategoryView
+              category={category}
+              active={category.path === this.props.myCategory}/>
+          </div>
+        ))}
       </div>
     )
   }

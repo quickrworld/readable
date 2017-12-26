@@ -76,7 +76,8 @@ class ReadableView extends Component {
       <div>
         <div className="top-line" style={topLineStyle}>
           <div style={titleStyle}>
-            {this.props.readable.title}
+            {this.props.readable.title} {(this.props.category === 'all') && '|'}
+            {(this.props.category === 'all') && this.props.readableCategoryName}
           </div>
           <div style={editIconStyle}>
             <span style={editLabelStyle}>
@@ -131,8 +132,11 @@ class ReadableView extends Component {
 function mapStateToProps(state, ownProps) {
   const selectedReadable = ownProps.id
   const readable = ownProps.readable
-  const { readableById  } = state
-  return { selectedReadable, readable, readableById }
+  const { readableById, allCategories, selectedCategory } = state
+  const readableCategoryName = allCategories.items &&
+    allCategories.items[readable.category] &&
+    allCategories.items[readable.category].name
+  return { selectedReadable, readable, readableById, category: selectedCategory, readableCategoryName }
 }
 
 function mapDispatchToProps(dispatch) {
