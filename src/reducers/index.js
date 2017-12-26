@@ -39,6 +39,8 @@ import {
   FETCH_COMMENT_ADD_FAILURE,
   FETCH_COMMENT_EDIT_SUCCESS,
   FETCH_COMMENT_EDIT_FAILURE,
+  FETCH_COMMENT_DELETE_SUCCESS,
+  FETCH_COMMENT_DELETE_FAILURE,
   FETCH_READABLE_ADD_SUCCESS,
   // FETCH_READABLE_ADD_FAILURE,
   FETCH_READABLE_EDIT_SUCCESS,
@@ -359,6 +361,12 @@ function commentsByReadable(state = {}, action) {
       editedState[action.comment.parentId].items[action.comment.id] = action.comment
       return editedState
     case FETCH_COMMENT_EDIT_FAILURE:
+      return state
+    case FETCH_COMMENT_DELETE_SUCCESS:
+      let deletedCommentState = Object.assign({}, state)
+      delete deletedCommentState[action.comment.parentId].items[action.comment.id]
+      return deletedCommentState
+    case FETCH_COMMENT_DELETE_FAILURE:
       return state
     default:
       return state

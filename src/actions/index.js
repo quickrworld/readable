@@ -54,6 +54,10 @@ export const FETCH_EDIT_COMMENT = 'FETCH_EDIT_COMMENT'
 export const FETCH_COMMENT_EDIT_SUCCESS = 'FETCH_COMMENT_EDIT_SUCCESS'
 export const FETCH_COMMENT_EDIT_FAILURE = 'FETCH_COMMENT_EDIT_FAILURE'
 
+export const FETCH_DELETE_COMMENT = 'FETCH_DELETE_COMMENT'
+export const FETCH_COMMENT_DELETE_SUCCESS = 'FETCH_COMMENT_DELETE_SUCCESS'
+export const FETCH_COMMENT_DELETE_FAILURE = 'FETCH_COMMENT_DELETE_FAILURE'
+
 export const FETCH_ADD_READABLE = 'FETCH_ADD_READABLE'
 export const FETCH_READABLE_ADD_SUCCESS = 'FETCH_READABLE_ADD_SUCCESS'
 export const FETCH_READABLE_ADD_FAILURE = 'FETCH_READABLE_ADD_FAILURE'
@@ -639,6 +643,49 @@ export function fetchCommentEditSuccess(json) {
 export function fetchCommentEditFailure(json) {
   return {
     type: FETCH_COMMENT_EDIT_FAILURE,
+    error: json
+  }
+}
+
+// delete comment
+export function fetchDeleteComment(data) {
+  return function(dispatch) {
+    const url = `http://localhost:3001/comments/${data.id}`
+    const body = {
+      id: data.id
+    }
+    return fetch(
+      url, {
+        method: 'DELETE',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': 'quickrworld',
+        }
+      }
+    )
+    .then(
+      response => { const json = response.json(); return json },
+      error => ({ 'error': error })
+    )
+    .then(
+      json => json['error']
+        ? dispatch(fetchCommentDeleteFailure(json))
+        : dispatch(fetchCommentDeleteSuccess(json))
+    )
+  }
+}
+
+export function fetchCommentDeleteSuccess(json) {
+  return {
+    type: FETCH_COMMENT_DELETE_SUCCESS,
+    comment: json
+  }
+}
+
+export function fetchCommentDeleteFailure(json) {
+  return {
+    type: FETCH_COMMENT_DELETE_FAILURE,
     error: json
   }
 }

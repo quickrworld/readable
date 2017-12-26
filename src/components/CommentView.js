@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import UpvoteCommentView from './UpvoteCommentView'
 import DownvoteCommentView from './DownvoteCommentView'
 import CommentEditorView from './CommentEditorView'
+import {fetchDeleteComment} from "../actions";
+import {connect} from "react-redux";
 class CommentView extends Component {
   state = {
     editorOpen: false
@@ -11,6 +13,10 @@ class CommentView extends Component {
   }
   closeEditor = () => {
     this.setState({editorOpen: false})
+  }
+  deleteComment = () => {
+    // TODO
+    this.props.deleteComment(this.props.comment)
   }
   handleMouseEnter = (event) => {
     event.target.style.backgroundColor = 'rgba(47,61,72,.8)'
@@ -77,7 +83,14 @@ class CommentView extends Component {
           </div>
           <div style={editButtonStyle}>
             <span style={editIconStyle}>
-              <span role={'img'} aria-label="Edit comment">
+              <span aria-label="Edit comment">
+                <button
+                  onMouseEnter={this.handleMouseEnter}
+                  onMouseLeave={this.handleMouseLeave}
+                  style={{borderWidth: '0px'}}
+                  onClick={() => this.deleteComment()}>
+                  Delete
+                </button>
                 <button
                   onMouseEnter={this.handleMouseEnter}
                   onMouseLeave={this.handleMouseLeave}
@@ -108,4 +121,10 @@ class CommentView extends Component {
   }
 }
 
-export default CommentView
+function mapDispatchToProps(dispatch) {
+  return {
+    deleteComment: (data) => dispatch(fetchDeleteComment(data))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(CommentView)
