@@ -25,13 +25,13 @@ class CommentView extends Component {
   render() {
     const topLineStyle = {
       display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
+      gridTemplateColumns: '1fr 1fr 1fr 1fr',
       gridTemplateRows: 'auto minmax(min-content, min-content)',
       paddingBottom: '6px',
     }
     const commentHeadingStyle = {
       gridColumnStart: '1',
-      gridColumnEnd: '2',
+      gridColumnEnd: '4',
       color: 'rgb(79, 79, 79)',
       alignContent: 'center',
       paddingTop: '12px'
@@ -41,8 +41,8 @@ class CommentView extends Component {
       color: 'rgb(79, 79, 79)'
     }
     const editButtonStyle = {
-      gridColumnStart: '2',
-      gridColumnEnd: '3',
+      gridColumnStart: '4',
+      gridColumnEnd: '5',
       textAlign: 'right',
       alignContent: 'center',
       paddingTop: '12px'

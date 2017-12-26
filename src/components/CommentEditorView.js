@@ -73,7 +73,7 @@ class CommentEditorView extends Component {
         <div style={{
           gridRow: '1',
           gridColumnStart: '1',
-          gridColumnEnd: '3',
+          gridColumnEnd: '5',
         }}><span style={{paddingRight: '4px'}}>Comment as </span>
           <input
             type="text"
