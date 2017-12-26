@@ -14,21 +14,21 @@ import {
   FETCH_READABLE_SUCCESS,
   FETCH_READABLE_FAILURE,
   UPVOTE_READABLE,
-  // FETCH_READABLE_UPVOTE_REQUEST,
+  FETCH_READABLE_UPVOTE_REQUEST,
   FETCH_READABLE_UPVOTE_SUCCESS,
-  // FETCH_READABLE_UPVOTE_FAILURE,
+  FETCH_READABLE_UPVOTE_FAILURE,
   DOWNVOTE_READABLE,
-  // FETCH_READABLE_DOWNVOTE_REQUEST,
+  FETCH_READABLE_DOWNVOTE_REQUEST,
   FETCH_READABLE_DOWNVOTE_SUCCESS,
-  // FETCH_READABLE_DOWNVOTE_FAILURE,
+  FETCH_READABLE_DOWNVOTE_FAILURE,
   UPVOTE_COMMENT,
-  // FETCH_COMMENT_UPVOTE_REQUEST,
+  FETCH_COMMENT_UPVOTE_REQUEST,
   FETCH_COMMENT_UPVOTE_SUCCESS,
-  // FETCH_COMMENT_UPVOTE_FAILURE,
+  FETCH_COMMENT_UPVOTE_FAILURE,
   DOWNVOTE_COMMENT,
-  // FETCH_COMMENT_DOWNVOTE_REQUEST,
+  FETCH_COMMENT_DOWNVOTE_REQUEST,
   FETCH_COMMENT_DOWNVOTE_SUCCESS,
-  // FETCH_COMMENT_DOWNVOTE_FAILURE,
+  FETCH_COMMENT_DOWNVOTE_FAILURE,
   SORT_READABLES_NEWEST,
   SORT_READABLES_OLDEST,
   SORT_READABLES_TOPVOTED,
@@ -144,12 +144,20 @@ function readable(state = {
       return Object.assign({}, state, {
         isFetching: false
       })
+    case FETCH_READABLE_UPVOTE_REQUEST:
+      return state
     case FETCH_READABLE_UPVOTE_SUCCESS:
       let upvotedState = Object.assign({}, state)
       return upvotedState[action.id] = action.readable
+    case FETCH_READABLE_UPVOTE_FAILURE:
+      return state
+    case FETCH_READABLE_DOWNVOTE_REQUEST:
+      return state
     case FETCH_READABLE_DOWNVOTE_SUCCESS:
       let downvotedState = Object.assign({}, state)
       return downvotedState[action.id] = action.readable
+    case FETCH_READABLE_DOWNVOTE_FAILURE:
+      return state
     case FETCH_READABLE_EDIT_SUCCESS:
       let readableEditedState = Object.assign({}, state)
       readableEditedState.readable = Object.assign({}, action.readable)
@@ -328,16 +336,24 @@ function commentsByReadable(state = {}, action) {
       return value
     case UPVOTE_COMMENT:
       return state // we might want to update the value of voteCount for the matching comment (local copy)
+    case FETCH_COMMENT_UPVOTE_REQUEST:
+      return state
     case FETCH_COMMENT_UPVOTE_SUCCESS:
       let upvotedState = Object.assign({}, state)
       upvotedState[action.comment.parentId].items[action.id] = action.comment
       return upvotedState
+    case FETCH_COMMENT_UPVOTE_FAILURE:
+      return state
     case DOWNVOTE_COMMENT:
       return state // we might want to update the value of voteCount for the matching comment (local copy)
+    case FETCH_COMMENT_DOWNVOTE_REQUEST:
+      return state
     case FETCH_COMMENT_DOWNVOTE_SUCCESS:
       let downvotedState = Object.assign({}, state)
       downvotedState[action.comment.parentId].items[action.id] = action.comment
       return downvotedState
+    case FETCH_COMMENT_DOWNVOTE_FAILURE:
+      return state
     case SORT_COMMENTS_NEWEST:
       return Object.assign({}, state, {
         'order': SORT_COMMENTS_NEWEST
